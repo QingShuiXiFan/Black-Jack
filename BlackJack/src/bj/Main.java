@@ -2,7 +2,7 @@
  * @Description: Main class
  * @Author: your name
  * @Date: 2019-09-22 17:59:28
- * @LastEditTime: 2019-09-23 13:20:20
+ * @LastEditTime: 2019-09-23 11:41:08
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -12,8 +12,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 class Main{
+	public static int num_of_players = 0, balance = 0, choose_dealer = 0, cash_out = 0, dealer_index = 0;
     public static void main(String[] args) {
-    	int num_of_players = 0, balance = 0, choose_dealer = 0, cash_out = 0, dealer_index = 0;
     	System.out.println("Please input the number of players.");
     	while(true) {
     		try {
@@ -66,17 +66,17 @@ class Main{
     	}
         Person[] person = new Person[num_of_players];                   //initialize n Player instances
         if(choose_dealer == 1) {
-        	person[0] = new Dealer();
+        	person[0] = new Dealer(0, balance);
         	for(int i = 1; i < num_of_players; i++) {
-        		person[1] = new Player();
+        		person[i] = new Player(i, balance);
         	}
         }
         else if(choose_dealer == 2) {
         	dealer_index = random_choose_dealer(num_of_players) - 1;
-        	person[dealer_index] = new Dealer();
+        	person[dealer_index] = new Dealer(dealer_index, balance);
         	for(int i = 0; i < num_of_players; i++) {
         		if(i != dealer_index)
-        			person[i] = new Player();
+        			person[i] = new Player(i, balance);
         		else
         			continue;
         	}
@@ -111,8 +111,16 @@ class Main{
         }
     }
 
-    public static void round(){
-    	
+    public static void round(Person[] person){
+    	Cards cards = new Cards();
+    	cards.shuffle();
+    	for(int i = 0; i < 2; i++) {                                       //deal 2 cards to start
+    		for(int j = 0; j < num_of_players; j++) {
+    			if(j != dealer_index) {
+    				
+    			}
+    		}
+    	}
     }
     
     public static int random_choose_dealer(int num_of_players) {         //[1,num_of_players + 1) random int
