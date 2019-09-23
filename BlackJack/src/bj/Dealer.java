@@ -8,8 +8,13 @@
 package bj;
 
 class Dealer extends Person{
+    Cards c;
     public Dealer(){
         super();
+        c=new Cards();
+    }
+    public Card pop(){
+        return c.pop();
     }
 
     /**deal method and auto hit method*/
