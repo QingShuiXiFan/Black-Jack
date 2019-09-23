@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-22 18:07:51
- * @LastEditTime: 2019-09-23 13:53:34
+ * @LastEditTime: 2019-09-23 14:23:43
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -27,6 +27,13 @@ class Player extends Person{
     //clear bet amount after each round
     public void clearBet(){
         this.bet = 0;
+    }
+
+    public void addCard(Card card, int leftOrRight){
+        if(leftOrRight == 0){
+            this.cardsInLeft[cardsInLeft.length] = card;
+        }
+        else this.cardsInRight[cardsInRight.length] = card;
     }
 
     //get received cards in one hand, 0 for left hand and 1 for right hand
