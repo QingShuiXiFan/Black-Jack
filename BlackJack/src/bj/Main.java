@@ -117,7 +117,7 @@ class Main{
     	for(int i = 0; i < 2; i++) {                                       //deal 2 cards to start
     		for(int j = 0; j < num_of_players; j++) {
     			if(j != dealer_index) {
-    				
+    				person[j].addCard
     			}
     		}
     	}
