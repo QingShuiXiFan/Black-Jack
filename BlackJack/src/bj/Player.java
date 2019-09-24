@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:51
- * @LastEditTime: 2019-09-24 19:17:07
+ * @LastEditTime: 2019-09-24 19:41:23
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -22,6 +22,10 @@ class Player extends Person{
     //set bet amount for each round
     public void setBet(int bet){
         this.bet = bet;
+    }
+
+    public int getBet(){
+        return this.bet;
     }
 
     //clear bet amount after each round
