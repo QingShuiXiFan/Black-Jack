@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:57
- * @LastEditTime: 2019-09-23 17:22:18
+ * @LastEditTime: 2019-09-24 19:16:09
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -30,5 +30,10 @@ class Dealer extends Person{
             cardsInHand[cardsInHand.length] = cards.pop();
             valueSum += cardsInHand[cardsInHand.length-1].getValue();
         }
+    }
+
+    //add one card, param leftOrRight can be any int
+    public void addCard(Card card){
+        this.cardsInHand = Player.add(cardsInHand , card);
     }
 }
