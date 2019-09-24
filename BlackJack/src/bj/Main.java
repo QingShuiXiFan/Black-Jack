@@ -112,13 +112,22 @@ class Main{
     }
 
     public static void round(Person[] person){
+    	int player_action = 0;
     	Cards cards = new Cards();
     	cards.shuffle();
     	for(int i = 0; i < 2; i++) {                                       //deal 2 cards to start
     		for(int j = 0; j < num_of_players; j++) {
     			if(j != dealer_index) {
-    				person[j].addCard
+    				person[j].addCard(cards.pop(), 0);
     			}
+    			else
+    				person[j].addCard(cards.pop());
+    		}
+    	}
+    	
+    	for(int i = 0; i < num_of_players; i++) {                          //player choose action  
+    		if(i != dealer_index) {
+    			
     		}
     	}
     }
