@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:57
- * @LastEditTime: 2019-09-24 19:16:09
+ * @LastEditTime: 2019-09-24 19:22:32
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -32,7 +32,7 @@ class Dealer extends Person{
         }
     }
 
-    //add one card, param leftOrRight can be any int
+    //add one card
     public void addCard(Card card){
         this.cardsInHand = Player.add(cardsInHand , card);
     }
