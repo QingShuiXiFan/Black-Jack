@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:51
- * @LastEditTime: 2019-09-23 17:18:22
+ * @LastEditTime: 2019-09-24 19:41:23
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -24,6 +24,10 @@ class Player extends Person{
         this.bet = bet;
     }
 
+    public int getBet(){
+        return this.bet;
+    }
+
     //clear bet amount after each round
     public void clearBet(){
         this.bet = 0;
@@ -31,9 +35,9 @@ class Player extends Person{
 
     public void addCard(Card card, int leftOrRight){
         if(leftOrRight == 0){
-            this.cardsInLeft[cardsInLeft.length] = card;
+            this.cardsInLeft = add(cardsInLeft, card);
         }
-        else this.cardsInRight[cardsInRight.length] = card;
+        else this.cardsInRight = add(cardsInRight, card);
     }
 
     //get received cards in one hand, 0 for left hand and 1 for right hand
@@ -43,13 +47,13 @@ class Player extends Person{
         else return this.cardsInRight;
     }
 
-    //choose action. leftOrRight: 0 for lefthand, 1 for right hand
+    //choose action. leftOrRight: 0 for lefthand, 1 for righthand
     public int chooseAction(Cards cards, int leftOrRight){
         System.out.println("Actions:");
-        System.out.println("1. Hit"); //1
-        System.out.println("2. Stand"); //2
-        System.out.println("3. Split");//3
-        System.out.println("4. Double Up");//4
+        System.out.println("1 - Hit"); //1
+        System.out.println("2 - Stand"); //2
+        System.out.println("3 - Split");//3
+        System.out.println("4 - Double Up");//4
         System.out.print("Please choose your action(input index number):");
 
         Scanner in = new Scanner(System.in);
@@ -68,8 +72,12 @@ class Player extends Person{
                 System.out.print("Input invalid, input valid index number:");
                 choice = in.nextInt();
             }
-            else if(!(this.cardsInLeft[0] == this.cardsInLeft[1] && this.cardsInLeft[2] == null && this.cardsInRight[0] == null) && choice == 3){
-                System.out.print("Cannot split your cards, input:");
+            else if(choice == 3 && cardsInLeft.length != 2){
+                System.out.print("Cannot split your cards, input another index:");
+                choice = in.nextInt();
+            }
+            else if(!(this.cardsInLeft[0] == this.cardsInLeft[1] && cardsInLeft.length == 2 && cardsInRight.length == 0) && choice == 3){
+                System.out.print("Cannot split your cards, input another index:");
                 choice = in.nextInt();
             }
             else break;
@@ -97,11 +105,11 @@ class Player extends Person{
     public Card hit(Cards cards, int leftOrRight){
         //get one card for left hand
         if(leftOrRight == 0){
-            this.cardsInLeft[cardsInLeft.length] = cards.pop();
+            this.cardsInLeft = add(cardsInLeft, cards.pop());
             return this.cardsInLeft[cardsInLeft.length-1];
         }
         else{
-            this.cardsInRight[cardsInRight.length] = cards.pop();
+            this.cardsInRight = add(cardsInRight, cards.pop());
             return this.cardsInRight[cardsInRight.length-1];
         }
     }
@@ -126,5 +134,15 @@ class Player extends Person{
         this.bet += this.bet;
         hit(cards, leftOrRight);
         return stand();
+    }
+
+    //This method will add an element to an array and return the resulting array
+    //add an item to an array
+    public static Card[] add(Card[] arr, Card element){
+        Card[] tempArr = new Card[arr.length+1];
+        System.arraycopy(arr, 0, tempArr, 0, arr.length);
+        
+        tempArr[arr.length] = element;
+        return tempArr;
     }
 }
