@@ -15,5 +15,13 @@ public class Person{
         this.ID = ID;
         this.balance = balance;
     }
+    
+    public void getBalance(){
+        this.balance = balance;
+    }
+    
+    public void setBalance(int balance){
+        this.balance = balance;
+    }
 
 }

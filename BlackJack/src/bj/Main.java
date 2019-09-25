@@ -124,13 +124,21 @@ class Main{
     				person[j].addCard(cards.pop());
     		}
     	}
-    	
-    	for(int i = 0; i < num_of_players; i++) {                          //player choose action  
-    		if(i != dealer_index) {
-    			
+    	while(true) {
+    		for(int i = 0; i < num_of_players; i++) {                          //player choose action  
+    			if(i != dealer_index) {
+    				if(Judge.isBust(person[i].getCards(0)) == false)
+    					((Player) person[i]).chooseAction(cards, 0);
+    				else {
+    					person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
+    					if(person[i].getCards(1).length > 0) {
+    						
+    					}
+    				}
+    					
+    			}
     		}
     	}
-    }
     
     public static int random_choose_dealer(int num_of_players) {         //[1,num_of_players + 1) random int
     	Random r = new Random();
