@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:57
- * @LastEditTime: 2019-09-27 18:24:32
+ * @LastEditTime: 2019-09-27 18:59:31
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -52,6 +52,14 @@ class Dealer extends Person{
 
     public Card[] getCards(){
         return cardsInHand;
+    }
+
+    //print what the dealer has in certain hand
+    public void printCardsInHand(){
+        System.out.print("Cards in hand: ");
+        for(int i=0;i<cardsInHand.length;i++){
+            System.out.print(cardsInHand[i].getSuit()+cardsInHand[i].getRealValue() + " ");
+        }
     }
 
     //*************************************************************************** */
