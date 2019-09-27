@@ -30,16 +30,16 @@ public class Cards{
             for (int j=i-4+1;j<=i;j++){
                 Card c=new Card("","",0);
                 if(count==1) {
-                    c = new Card("A", "A", j);
+                    c = new Card("A", "A", count);
                 }else if(count<=10){
-                    c= new Card(String.valueOf(count),String.valueOf(count),j);
+                    c= new Card(String.valueOf(count),String.valueOf(count),count);
                 }else if (count<=13){
                     if (count==11)
-                        c= new Card("J","J",j);
+                        c= new Card("J","J",count);
                     else if(count==12)
-                        c= new Card("Q","Q",j);
+                        c= new Card("Q","Q",count);
                     else if(count==13)
-                        c= new Card("K","K",j);
+                        c= new Card("K","K",count);
                 }
                 cards.add(c);
             }
