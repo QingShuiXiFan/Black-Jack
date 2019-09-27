@@ -86,8 +86,6 @@ public class play {
 		 else {
 			 person[i].addCard(cards.pop(), 0);
 			 if(Judge.isBust(person[i].getCards(0)) == true) {                             // if left hand bust
-				 //person[i].setBalance((person[i].getBalance() - ((Player) person[i]).getBet()));
-				 //person[Main.dealer_index].setBalance((person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet()));
 				 if(is_bust[i] == 0)                                                       // if no hand bust before
 					 is_bust[i] = 1;
 				 else if(is_bust[i] == 2)                                                  // if right already bust before
@@ -116,8 +114,6 @@ public class play {
 			 else {
 				 person[i].addCard(cards.pop(), 1);
 				 if(Judge.isBust(person[i].getCards(1)) == true) {                             // if right hand bust
-					// person[i].setBalance((person[i].getBalance() - ((Player) person[i]).getBet()));
-					// person[Main.dealer_index].setBalance((person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet()));
 					 if(is_bust[i] == 0)                                                       // if no hand bust before
 						 is_bust[i] = 2;
 					 else if(is_bust[i] == 1)                                                  // if left already bust before

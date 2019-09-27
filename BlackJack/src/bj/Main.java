@@ -12,7 +12,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 class Main{
-	public static int num_of_players = 0, balance = 0, choose_dealer = 0, dealer_index = 0, sum_bet = 0;
+	public static int num_of_players = 0, balance = 0, choose_dealer = 0, dealer_index = 0;
     public static void main(String[] args) {
     	player_input();
     	int [] players_bet = new int [num_of_players];
@@ -37,13 +37,13 @@ class Main{
         	bet_input(players_bet);
         	play.round(person);
         	if(is_cash_out() == false) {
-        		sum_bet = 0;
         		continue;
         	}
         	else
         		break;
         	
         }
+        Judge.printBalance(person);
     }
     
     
@@ -121,7 +121,6 @@ class Main{
     			}
     		}
     		players_bet[i] = bet;
-    		sum_bet += bet;
     	}
     }
     	
