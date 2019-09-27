@@ -20,16 +20,23 @@ class Dealer extends Person{
     reaches or exceeds 17.*/
     public void autoHit(Cards cards){
         //calculate sum value of cards in hand
-        int valueSum = 0;
-        for(int i=0; i<cardsInHand.length; i++){
-            valueSum += cardsInHand[i].getValue();
-        }
+        int valueSum = getCardsValue();
 
         while(valueSum < 17){
             // hit
             cardsInHand[cardsInHand.length] = cards.pop();
             valueSum += cardsInHand[cardsInHand.length-1].getValue();
         }
+    }
+
+    @Override
+    //calculate sum value of cards in hand
+    public int getCardsValue(){
+        int valueSum = 0;
+        for(int i=0; i<cardsInHand.length; i++){
+            valueSum += cardsInHand[i].getValue();
+        }
+        return valueSum;
     }
 
     //add one card
