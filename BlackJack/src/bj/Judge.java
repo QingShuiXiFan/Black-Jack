@@ -34,9 +34,20 @@ class Judge{
     // output: winner index in Person[], if ties, return -1
     public static int whoWin(Person[] ps, int dealer_index, int player_index, int leftOrRight){
         int dealerValue = ps[dealer_index].getCardsValue();
+
+        //calculate max value of cards if exists 'A's
+        for(int i=0 ; i < hasAce(ps[dealer_index].getCards()); i++){
+            if(dealerValue + 10 <= 21) dealerValue += 10;
+            else break;
+        }
+
         int playerValue = 0;
         if(Judge.isBust(ps[player_index].getCards(leftOrRight)) == false){
             playerValue = ps[player_index].getCardsValue(leftOrRight);
+
+            //calculate max value of cards if exists 'A's
+
+
             if(playerValue > dealerValue)return player_index;
             else if(playerValue == dealerValue){
                 //if player is natural bj and dealer is not
@@ -70,5 +81,16 @@ class Judge{
         for(int i=0; i<ps.length; i++){
             System.out.println(ps[i].getID() + " : $" + ps[i].getBalance());
         }
+    }
+
+    // reuturn the number of 'A's in cards
+    public static int hasAce(Card[] cards){
+        int count = 0;
+        for(int i=0; i < cards.length; i++){
+            if(cards[i].getValue() == 1){
+                count++;
+            }
+        }
+        return count;
     }
 }

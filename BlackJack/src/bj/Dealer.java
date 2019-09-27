@@ -24,12 +24,13 @@ class Dealer extends Person{
 
         while(valueSum < 17){
             // hit
-            cardsInHand[cardsInHand.length] = cards.pop();
+            cardsInHand = add(cardsInHand, cards.pop());
             valueSum += cardsInHand[cardsInHand.length-1].getValue();
         }
     }
 
     @Override
+    //*************************************************************************** */
     //calculate sum value of cards in hand
     public int getCardsValue(){
         int valueSum = 0;
@@ -41,10 +42,22 @@ class Dealer extends Person{
 
     //add one card
     public void addCard(Card card){
-        this.cardsInHand = Player.add(cardsInHand , card);
+        this.cardsInHand = add(cardsInHand , card);
     }
 
     public Card[] getCards(){
         return cardsInHand;
+    }
+
+    //*************************************************************************** */
+
+    //This method will add an element to an array and return the resulting array
+    //add an item to an array
+    public static Card[] add(Card[] arr, Card element){
+        Card[] tempArr = new Card[arr.length+1];
+        System.arraycopy(arr, 0, tempArr, 0, arr.length);
+        
+        tempArr[arr.length] = element;
+        return tempArr;
     }
 }

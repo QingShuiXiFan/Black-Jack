@@ -42,7 +42,7 @@ class Player extends Person{
         else this.cardsInRight = add(cardsInRight, card);
     }
 
-    //calculate sum value of cards in hand
+    //calculate max sum value of cards in hand, treat 'A's as 11 if !isBust()
     public int getCardsValue(int leftOrRight){
         int valueSum = 0;
         if(leftOrRight == 0){
