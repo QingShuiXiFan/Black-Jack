@@ -20,7 +20,10 @@ class Judge{
 
     //judge if cards is natural BlackJack
     public static boolean isNaturalBJ(Card[] cards){
-
+        if(cards[0].getValue()+cards[1].getValue() == 21 && cards.length == 2 && (cards[0].getRealValue() == "A" || cards[1].getRealValue() == "A")){
+            return true;
+        }
+        else return false;
     }
 
     // judge who is winner if exists two or more persons who does not bust
@@ -35,15 +38,30 @@ class Judge{
         if(Judge.isBust(ps[player_index].getCards(leftOrRight)) == false){
             playerValue = ps[player_index].getCardsValue(leftOrRight);
             if(playerValue > dealerValue)return player_index;
-            else if(playerValue == dealerValue) return -1;
+            else if(playerValue == dealerValue){
+                //if player is natural bj and dealer is not
+                if(Judge.isNaturalBJ(ps[player_index].getCards(leftOrRight)) && !Judge.isNaturalBJ(ps[dealer_index].getCards())){
+                    return player_index;
+                }
+                //if dealer is neatural bj and player is not
+                else if(!Judge.isNaturalBJ(ps[player_index].getCards(leftOrRight)) && Judge.isNaturalBJ(ps[dealer_index].getCards())){
+                    return dealer_index;
+                }
+                else return -1;
+
+            }
             else return dealer_index;
         }
         else return dealer_index;
     }
 
     // settle balance for dealer and player after one round
-    public static void settleBalance(){
-
+    // input: Person[] ps,
+    //        index: index of player
+    //        amount: balance change, can be positive and negative
+    public static Person settleBalance(Person[] ps, int index, int amount){
+        ps[index].setBalance(ps[index].getBalance()+amount);
+        return ps[index];
     }
 
     // print balance for all persons
