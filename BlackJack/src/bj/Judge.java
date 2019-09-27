@@ -8,7 +8,7 @@
 package bj;
 
 class Judge{
-    //juage if dealer or player has bust
+    //judge if dealer or player has bust
     public static boolean isBust(Card[] cards){
         int sum = 0;
         for(int i=0; i<cards.length; i++){
@@ -18,22 +18,27 @@ class Judge{
         else return false;
     }
 
+    //judge if cards is natural BlackJack
+    public static boolean isNaturalBJ(Card[] cards){
+
+    }
+
     // judge who is winner if exists two or more persons who does not bust
     // input: Person[] ps: all Person instances
     //        dealer_index
     //        player_index
     //        leftOrRight: left hand or right hand
-    // output: Person instance, if ties, return null
-    public static Person whoWin(Person[] ps, int dealer_index, int player_index, int leftOrRight){
+    // output: winner index in Person[], if ties, return -1
+    public static int whoWin(Person[] ps, int dealer_index, int player_index, int leftOrRight){
         int dealerValue = ps[dealer_index].getCardsValue();
         int playerValue = 0;
         if(Judge.isBust(ps[player_index].getCards(leftOrRight)) == false){
             playerValue = ps[player_index].getCardsValue(leftOrRight);
-            if(playerValue > dealerValue)return ps[player_index];
-            else if(playerValue == dealerValue) return null;
-            else return ps[dealer_index];
+            if(playerValue > dealerValue)return player_index;
+            else if(playerValue == dealerValue) return -1;
+            else return dealer_index;
         }
-        else return ps[dealer_index];
+        else return dealer_index;
     }
 
     // settle balance for dealer and player after one round
@@ -41,7 +46,7 @@ class Judge{
 
     }
 
-    // print balance for all players
+    // print balance for all persons
     public static void printBalance(Person[] ps){
         System.out.println("Balance for every players:");
         for(int i=0; i<ps.length; i++){
