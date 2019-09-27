@@ -78,10 +78,10 @@ class Player extends Person{
         System.out.println("4 - Double Up");//4
         System.out.print("Please choose your action(input index number):");
 
-        Scanner in = new Scanner(System.in);
         int choice;
         while(true){
             try{
+                Scanner in = new Scanner(System.in);
                 choice = in.nextInt();
                 break;
             }catch(Exception e){
@@ -91,20 +91,22 @@ class Player extends Person{
         }
         while(true){
             if(choice<1 || choice >4){
+                Scanner in = new Scanner(System.in);
                 System.out.print("Input invalid, input valid index number:");
                 choice = in.nextInt();
             }
             else if(choice == 3 && cardsInLeft.length != 2){
+                Scanner in = new Scanner(System.in);
                 System.out.print("Cannot split your cards, input another index:");
                 choice = in.nextInt();
             }
             else if(!(this.cardsInLeft[0] == this.cardsInLeft[1] && cardsInLeft.length == 2 && cardsInRight.length == 0) && choice == 3){
+                Scanner in = new Scanner(System.in);
                 System.out.print("Cannot split your cards, input another index:");
                 choice = in.nextInt();
             }
             else break;
         }
-        in.close();
 
         switch(choice){
             case 1: 
