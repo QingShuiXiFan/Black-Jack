@@ -1,17 +1,30 @@
 /*
  * @Description: In User Settings Edit
- * @Author: your name
+ * @Author: Jun Li
  * @Date: 2019-09-22 18:07:45
- * @LastEditTime: 2019-09-22 18:35:53
+ * @LastEditTime: 2019-09-24 20:18:25
  * @LastEditors: Please set LastEditors
  */
 package bj;
 
-class Person{
+public class Person{
     private int ID;
     private int balance;
 
-    public Person(){
-        
+    public Person(int ID, int balance){
+        this.ID = ID;
+        this.balance = balance;
     }
+    
+    public void getBalance(){
+        this.balance = balance;
+    }
+    
+    public void setBalance(int balance){
+        this.balance = balance;
+    }
+
+    public void addCard(Card card, int leftOrRight){}
+    public void addCard(Card card){}
+
 }

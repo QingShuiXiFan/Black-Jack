@@ -2,16 +2,20 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-22 18:07:06
- * @LastEditTime: 2019-09-22 19:42:25
+ * @LastEditTime: 2019-09-24 19:23:43
  * @LastEditors: Please set LastEditors
  */
 package bj;
 
 class Judge{
     //juage if dealer or player has bust
-    public static boolean isBust(){
-
-        return false;
+    public static boolean isBust(Card[] cards){
+        int sum = 0;
+        for(int i=0; i<cards.length; i++){
+            sum += cards[i].getValue();
+        }
+        if(sum > 21)return true;
+        else return false;
     }
 
     // juage who is winner
