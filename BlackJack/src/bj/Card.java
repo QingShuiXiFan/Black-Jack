@@ -18,6 +18,9 @@ class Card{
         this.value=value;
     }
     /** set, get methods**/
+    public void setSuit(String name){
+        suit=name;
+    }
     public String getSuit(){
         return suit;
     }
