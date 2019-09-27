@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:57
- * @LastEditTime: 2019-09-24 19:22:32
+ * @LastEditTime: 2019-09-27 18:24:32
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -26,6 +26,11 @@ class Dealer extends Person{
             // hit
             cardsInHand = add(cardsInHand, cards.pop());
             valueSum += cardsInHand[cardsInHand.length-1].getValue();
+            
+            //if receive 'A'
+            if(cardsInHand[cardsInHand.length-1].getValue() == 1 && valueSum + 10 <=21 && valueSum + 10 >= 17){
+                valueSum += 10;
+            }
         }
     }
 

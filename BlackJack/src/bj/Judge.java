@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-22 18:07:06
- * @LastEditTime: 2019-09-24 19:23:43
+ * @LastEditTime: 2019-09-27 18:26:03
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -36,7 +36,7 @@ class Judge{
         int dealerValue = ps[dealer_index].getCardsValue();
 
         //calculate max value of cards if exists 'A's
-        for(int i=0 ; i < hasAce(ps[dealer_index].getCards()); i++){
+        for(int i=0 ; i < aceCount(ps[dealer_index].getCards()); i++){
             if(dealerValue + 10 <= 21) dealerValue += 10;
             else break;
         }
@@ -46,7 +46,10 @@ class Judge{
             playerValue = ps[player_index].getCardsValue(leftOrRight);
 
             //calculate max value of cards if exists 'A's
-
+            for(int i=0 ; i < aceCount(ps[dealer_index].getCards(leftOrRight)); i++){
+                if(playerValue + 10 <= 21) playerValue += 10;
+                else break;
+            }
 
             if(playerValue > dealerValue)return player_index;
             else if(playerValue == dealerValue){
@@ -84,7 +87,7 @@ class Judge{
     }
 
     // reuturn the number of 'A's in cards
-    public static int hasAce(Card[] cards){
+    public static int aceCount(Card[] cards){
         int count = 0;
         for(int i=0; i < cards.length; i++){
             if(cards[i].getValue() == 1){
