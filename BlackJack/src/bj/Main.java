@@ -111,7 +111,7 @@ class Main{
     				try {
     					Scanner input = new Scanner(System.in);
     					bet = input.nextInt();
-    					if(bet <= 0) {
+    					if(bet <= 0 || bet > person[i].getBalance()) {
     						System.out.println("Input error.");
     						continue;
     					}

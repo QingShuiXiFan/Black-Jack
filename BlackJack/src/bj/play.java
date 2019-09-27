@@ -9,7 +9,7 @@ public class play {
 	    	int player_action = 0;                             
 	    	Cards cards = new Cards();
 	    	deal_cards_start(person, cards);                                                //deal 2 cards to start
-	    	while(true) {                                                            //player choose action
+	    	for(int round = 0; ; round++) {                                                            //player choose action
 	    		int inactive_player = 0;                                                 // player already bust or stand
 	    		for(int i = 0; i < Main.num_of_players; i++) {                            
 	    			if(i != Main.dealer_index) {
@@ -22,7 +22,7 @@ public class play {
 	    					inactive_player++;
 	    					continue;
 	    				}
-	    				player_left(person, i, cards);
+	    				player_left(person, i, cards, round);
 	    				player_right(person, i, cards);
 
 	    			}
@@ -41,11 +41,15 @@ public class play {
 		 for(int i = 0; i < 2; i++) {                                       //deal 2 cards to start
 	    		for(int j = 0; j < Main.num_of_players; j++) {
 	    			if(j != Main.dealer_index) {
+	    				System.out.print("Player " + j + " left hand ");
 	    				person[j].addCard(cards.pop(), 0);
 	    			}
-	    			else
+	    			else {
+	    				System.out.print("Dealer ");
 	    				person[j].addCard(cards.pop());
+	    			}
 	    		}
+	    		//System.out.println(i);
 	    	}
 	 }
 	 
@@ -91,12 +95,15 @@ public class play {
 	 
 	 
 	 
-	 public static void player_left(Person[] person, int i, Cards cards) {                     // i indicate the index of this player in person[]
+	 public static void player_left(Person[] person, int i, Cards cards, int round) {                     // i indicate the index of this player in person[]
 		 int actionLeft = 0;
 		 if(is_bust[i] == 1 || is_bust[i] == 3 || is_stand[i] == 1 || is_stand[i] == 3)  // left hand bust or stand
 			 player_right(person, i, cards);
 		 else {
-			 person[i].addCard(cards.pop(), 0);
+			 if(round > 0) {                                                             //start from 2nd round
+				 System.out.print("Player " + i + " left hand ");
+				 person[i].addCard(cards.pop(), 0);
+			 }
 			 if(Judge.isBust(person[i].getCards(0)) == true) {                             // if left hand bust
 				 if(is_bust[i] == 0)                                                       // if no hand bust before
 					 is_bust[i] = 1;
@@ -125,6 +132,7 @@ public class play {
 			 if(is_bust[i] == 2 || is_bust[i] == 3 || is_stand[i] == 2 || is_stand[i] == 3)    // right hand bust or stand
 				 return;
 			 else {
+				 System.out.print("Player " + i + " right hand ");
 				 person[i].addCard(cards.pop(), 1);
 				 if(Judge.isBust(person[i].getCards(1)) == true) {                             // if right hand bust
 					 if(is_bust[i] == 0)                                                       // if no hand bust before
