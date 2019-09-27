@@ -28,6 +28,7 @@ public class play {
 	    		}
 	    		if(inactive_player == Main.num_of_players - 1) {
 	    			dealer_action(person, cards);
+	    			break;
 	    		}
 	    		
 	    	}
