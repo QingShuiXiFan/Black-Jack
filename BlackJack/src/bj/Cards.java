@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-22 18:06:55
- * @LastEditTime: 2019-09-23 17:18:29
+ * @LastEditTime: 2019-09-27 18:49:25
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -55,6 +55,8 @@ public class Cards{
 
     public Card pop(){
         Card c=cards.get(0);
+        //change by Jun Li
+        System.out.println("Received card: " + c.getSuit() + c.getRealValue());
         cards.remove(0);
         return c;
     }

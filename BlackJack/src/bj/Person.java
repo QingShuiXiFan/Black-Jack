@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:45
- * @LastEditTime: 2019-09-24 20:18:25
+ * @LastEditTime: 2019-09-27 18:53:35
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -40,4 +40,6 @@ public class Person{
         Card[] cards = {};
         return cards;
     }
+    public void printCardsInHand(){}
+    public void printCardsInHand(int leftOrRight){}
 }
