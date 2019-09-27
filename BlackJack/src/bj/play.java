@@ -61,16 +61,16 @@ public class play {
 		 else {
 			for(int i = 0; i < Main.num_of_players; i++) {	                                            //dealer not bust
 				if(i != Main.dealer_index) {                    //compare with players' left hand
-					if(Judge.whoWin(person, Main.dealer_index, i, 0))
+					if(Judge.whoWin(person, Main.dealer_index, i, 0) == Main.dealer_index)
 						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
-					else if(Judge.whoWin(person, Main.dealer_index, i, 0))
+					else if(Judge.whoWin(person, Main.dealer_index, i, 0) == i)
 						person[i].setBalance(person[i].getBalance() + 2 * ((Player) person[i]).getBet());
 					
 				}
 				else if(i != Main.dealer_index && person[i].getCards(1).length > 0) {            //compare with players' right hand
-					if(Judge.whoWin(person, Main.dealer_index, i, 1))
+					if(Judge.whoWin(person, Main.dealer_index, i, 1) == Main.dealer_index)
 						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
-					else if(Judge.whoWin(person, Main.dealer_index, i, 1))
+					else if(Judge.whoWin(person, Main.dealer_index, i, 1) == i)
 						person[i].setBalance(person[i].getBalance() + 2 * ((Player) person[i]).getBet());
 				}
 			}
