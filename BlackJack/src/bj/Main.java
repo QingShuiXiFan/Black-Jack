@@ -15,7 +15,6 @@ class Main{
 	public static int num_of_players = 0, balance = 0, choose_dealer = 0, dealer_index = 0;
     public static void main(String[] args) {
     	player_input();
-    	int [] players_bet = new int [num_of_players];
         Person[] person = new Person[num_of_players];                   //initialize n Player instances
         if(choose_dealer == 1) {
         	person[0] = new Dealer(0, balance);
@@ -25,6 +24,7 @@ class Main{
         }
         else if(choose_dealer == 2) {
         	dealer_index = random_choose_dealer(num_of_players) - 1;
+        	System.out.println("Player " + dealer_index + " is dealer.");
         	person[dealer_index] = new Dealer(dealer_index, balance);
         	for(int i = 0; i < num_of_players; i++) {
         		if(i != dealer_index)
@@ -34,7 +34,7 @@ class Main{
         	}
         }
         while(true) {                                                      //round
-        	bet_input(players_bet);
+        	bet_input(person);
         	play.round(person);
         	if(is_cash_out() == false) {
         		continue;
@@ -102,25 +102,28 @@ class Main{
     
     
     
-    public static void bet_input(int[] players_bet) {
+    public static void bet_input(Person[] person) {
     	int bet = 0;
     	for(int i = 0; i < num_of_players; i++) { 
-    		while(true) {                                              //input bet for each player
-    			try {
-    				Scanner input = new Scanner(System.in);
-    				bet = input.nextInt();
-    				if(bet <= 0) {
-    					System.out.println("Input error.");
-    					continue;
+    		if(i != dealer_index) {
+    			System.out.println("Player " + i + " please input your bet.");
+    			while(true) {                                              //input bet for each player
+    				try {
+    					Scanner input = new Scanner(System.in);
+    					bet = input.nextInt();
+    					if(bet <= 0) {
+    						System.out.println("Input error.");
+    						continue;
+    					}
+    					else
+    						break;
     				}
-    				else
-    					break;
+    				catch(Exception e) {
+    					System.out.println("Input error.");
+    				}
     			}
-    			catch(Exception e) {
-    				System.out.println("Input error.");
-    			}
+    			((Player) person[i]).setBet(bet);
     		}
-    		players_bet[i] = bet;
     	}
     }
     	

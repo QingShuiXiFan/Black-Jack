@@ -49,7 +49,7 @@ public class play {
 	 
 	 
 	 public static void dealer_action(Person[] person, Cards cards) {
-		 displayCards(person[Main.dealer_index]);
+		 //displayCards(person[Main.dealer_index]);
 		 ((Dealer) person[Main.dealer_index]).autoHit(cards);
 		 if(Judge.isBust(person[Main.dealer_index].getCards()) == true) {                                 //dealer bust
 			for(int i = 0; i < Main.num_of_players; i++) {
