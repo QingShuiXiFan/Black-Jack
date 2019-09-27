@@ -43,4 +43,8 @@ class Dealer extends Person{
     public void addCard(Card card){
         this.cardsInHand = Player.add(cardsInHand , card);
     }
+
+    public Card[] getCards(){
+        return cardsInHand;
+    }
 }

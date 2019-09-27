@@ -43,7 +43,7 @@ class Player extends Person{
     }
 
     //calculate sum value of cards in hand
-    public int getcardValue(int leftOrRight){
+    public int getCardsValue(int leftOrRight){
         int valueSum = 0;
         if(leftOrRight == 0){
             for(int i=0; i<cardsInLeft.length; i++){
@@ -58,14 +58,16 @@ class Player extends Person{
         return valueSum;
     }
 
-    //*****************************************************************
-
     //get received cards in one hand, 0 for left hand and 1 for right hand
     public Card[] getCards(int leftOrRight){
         if(leftOrRight == 0)
         return this.cardsInLeft;
         else return this.cardsInRight;
     }
+
+    //*****************************************************************
+
+    
 
     //choose action. leftOrRight: 0 for lefthand, 1 for righthand
     public int chooseAction(Cards cards, int leftOrRight){
