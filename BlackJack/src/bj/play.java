@@ -14,6 +14,7 @@ public class play {
 	    		for(int i = 0; i < Main.num_of_players; i++) {                            
 	    			if(i != Main.dealer_index) {
 	    				if((is_bust[i] == 1 || is_stand[i] == 1) && (person[i].getCards(1).length == 0)) {   // player is inactive
+	    					System.out.println(i + " out");
 	    					inactive_player++;
 	    					continue;
 	    				}
@@ -51,6 +52,7 @@ public class play {
 	 
 	 public static void dealer_action(Person[] person, Cards cards) {
 		 //displayCards(person[Main.dealer_index]);
+		 //System.out.println("dealer action");
 		 ((Dealer) person[Main.dealer_index]).autoHit(cards);
 		 if(Judge.isBust(person[Main.dealer_index].getCards()) == true) {                                 //dealer bust
 			for(int i = 0; i < Main.num_of_players; i++) {
@@ -62,17 +64,26 @@ public class play {
 		 else {
 			for(int i = 0; i < Main.num_of_players; i++) {	                                            //dealer not bust
 				if(i != Main.dealer_index) {                    //compare with players' left hand
-					if(Judge.whoWin(person, Main.dealer_index, i, 0) == Main.dealer_index)
+					//System.out.println(Judge.whoWin(person, Main.dealer_index, i, 0));
+					if(Judge.whoWin(person, Main.dealer_index, i, 0) == Main.dealer_index) {
 						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
-					else if(Judge.whoWin(person, Main.dealer_index, i, 0) == i)
+						person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
+					}
+					else if(Judge.whoWin(person, Main.dealer_index, i, 0) == i) {
+						System.out.println(i + " lose_money");
+						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() - 2 * ((Player) person[i]).getBet());
 						person[i].setBalance(person[i].getBalance() + 2 * ((Player) person[i]).getBet());
-					
+					}
 				}
 				else if(i != Main.dealer_index && person[i].getCards(1).length > 0) {            //compare with players' right hand
-					if(Judge.whoWin(person, Main.dealer_index, i, 1) == Main.dealer_index)
+					if(Judge.whoWin(person, Main.dealer_index, i, 1) == Main.dealer_index) {
+						person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
 						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
-					else if(Judge.whoWin(person, Main.dealer_index, i, 1) == i)
+					}
+					else if(Judge.whoWin(person, Main.dealer_index, i, 1) == i) {
 						person[i].setBalance(person[i].getBalance() + 2 * ((Player) person[i]).getBet());
+						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() - 2 * ((Player) person[i]).getBet());
+					}
 				}
 			}
 	 	 }
@@ -93,6 +104,7 @@ public class play {
 					 is_bust[i] = 3;
 			 }
 			 else {
+				 System.out.println("Player " + i + " choose your action.");
 				 actionLeft = ((Player) person[i]).chooseAction(cards, 0);
 				 if(actionLeft == 2) {
 					 if(is_stand[i] == 0)
@@ -121,6 +133,7 @@ public class play {
 						 is_bust[i] = 3;
 				 }
 				 else {
+					 System.out.println("Player " + i + " choose your action.");
 					 actionRight = ((Player) person[i]).chooseAction(cards, 1);
 					 if(actionRight == 2) {
 						 if(is_stand[i] == 0)
