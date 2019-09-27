@@ -18,7 +18,13 @@ class Card{
         this.value=value;
     }
     /** set, get methods**/
-    public String get(){
+    public String getSuit(){
         return suit;
+    }
+    public String getRealValue(){
+        return realValue;
+    }
+    public int getValue(){
+        return value;
     }
 }

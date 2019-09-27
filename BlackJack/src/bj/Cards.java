@@ -18,7 +18,7 @@ public class Cards{
     @Override
     public String toString() {
         for (int i=0;i<cards.size();i++)
-        System.out.println(cards.get(i).get());
+        System.out.println(cards.get(i).getRealValue());
         return super.toString();
     }
 
