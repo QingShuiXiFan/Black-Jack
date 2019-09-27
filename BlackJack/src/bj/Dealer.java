@@ -20,10 +20,7 @@ class Dealer extends Person{
     reaches or exceeds 17.*/
     public void autoHit(Cards cards){
         //calculate sum value of cards in hand
-        int valueSum = 0;
-        for(int i=0; i<cardsInHand.length; i++){
-            valueSum += cardsInHand[i].getValue();
-        }
+        int valueSum = getCardsValue();
 
         while(valueSum < 17){
             // hit
@@ -32,8 +29,22 @@ class Dealer extends Person{
         }
     }
 
+    @Override
+    //calculate sum value of cards in hand
+    public int getCardsValue(){
+        int valueSum = 0;
+        for(int i=0; i<cardsInHand.length; i++){
+            valueSum += cardsInHand[i].getValue();
+        }
+        return valueSum;
+    }
+
     //add one card
     public void addCard(Card card){
         this.cardsInHand = Player.add(cardsInHand , card);
+    }
+
+    public Card[] getCards(){
+        return cardsInHand;
     }
 }

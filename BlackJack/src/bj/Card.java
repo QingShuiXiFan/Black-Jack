@@ -8,12 +8,17 @@
 package bj;
 
 class Card{
-    private char suit; // ♦, ♠, ♤, ♧
-    private char realValue; // true card value
+    private String suit; // ♦, ♠, ♤, ♧
+    private String realValue; // true card value
     private int value; // value in black jack game
 
-    public Card(){
-
+    public Card(String c,String realValue,int value){
+        suit=c;
+        this.realValue=realValue;
+        this.value=value;
     }
     /** set, get methods**/
+    public String get(){
+        return suit;
+    }
 }

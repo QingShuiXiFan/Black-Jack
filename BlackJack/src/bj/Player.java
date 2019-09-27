@@ -33,11 +33,29 @@ class Player extends Person{
         this.bet = 0;
     }
 
+    //************** Override methods from Person class *****************
+    @Override
     public void addCard(Card card, int leftOrRight){
         if(leftOrRight == 0){
             this.cardsInLeft = add(cardsInLeft, card);
         }
         else this.cardsInRight = add(cardsInRight, card);
+    }
+
+    //calculate sum value of cards in hand
+    public int getCardsValue(int leftOrRight){
+        int valueSum = 0;
+        if(leftOrRight == 0){
+            for(int i=0; i<cardsInLeft.length; i++){
+                valueSum += cardsInLeft[i].getValue();
+            }
+        }
+        else{
+            for(int i=0; i<cardsInRight.length; i++){
+                valueSum += cardsInRight[i].getValue();
+            }
+        }
+        return valueSum;
     }
 
     //get received cards in one hand, 0 for left hand and 1 for right hand
@@ -46,6 +64,10 @@ class Player extends Person{
         return this.cardsInLeft;
         else return this.cardsInRight;
     }
+
+    //*****************************************************************
+
+    
 
     //choose action. leftOrRight: 0 for lefthand, 1 for righthand
     public int chooseAction(Cards cards, int leftOrRight){

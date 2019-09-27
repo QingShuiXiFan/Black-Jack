@@ -16,8 +16,12 @@ public class Person{
         this.balance = balance;
     }
     
-    public void getBalance(){
-        this.balance = balance;
+    public int getID(){
+        return ID;
+    }
+
+    public int getBalance(){
+        return balance;
     }
     
     public void setBalance(int balance){
@@ -26,5 +30,14 @@ public class Person{
 
     public void addCard(Card card, int leftOrRight){}
     public void addCard(Card card){}
-
+    public int getCardsValue(){return 0;}
+    public int getCardsValue(int leftOrRight){return 0;}
+    public Card[] getCards(){
+        Card[] cards = {};
+        return cards;
+    }
+    public Card[] getCards(int leftOrRight){
+        Card[] cards = {};
+        return cards;
+    }
 }
