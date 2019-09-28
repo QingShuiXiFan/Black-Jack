@@ -2,12 +2,12 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-22 18:07:06
- * @LastEditTime: 2019-09-27 18:26:03
+ * @LastEditTime: 2019-09-27 20:10:43
  * @LastEditors: Please set LastEditors
  */
 package bj;
 
-class Judge{
+public class Judge{
     //judge if dealer or player has bust
     public static boolean isBust(Card[] cards){
         int sum = 0;

@@ -7,7 +7,7 @@
  */
 package bj;
 
-class Dealer extends Person{
+public class Dealer extends Person{
     private Card[] cardsInHand = {};
      
     public Dealer(int ID, int balance){
