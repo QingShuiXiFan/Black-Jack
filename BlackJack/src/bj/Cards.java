@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-22 18:06:55
- * @LastEditTime: 2019-09-28 13:00:05
+ * @LastEditTime: 2019-09-28 13:16:47
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -83,11 +83,15 @@ public class Cards{
 	public Card hit(Player player, int leftOrRight){
 	    //get one card for left hand
 	    if(leftOrRight == 0){
-	        player.cardsInLeft = Player.add(player.cardsInLeft, pop(1));
+            player.cardsInLeft = Player.add(player.cardsInLeft, pop(1));
+            
+            // print cards in hand
+            player.printCardsInHand();
 	        return player.cardsInLeft[player.cardsInLeft.length-1];
 	    }
 	    else{
-	        player.cardsInRight = Player.add(player.cardsInRight, pop(1));
+            player.cardsInRight = Player.add(player.cardsInRight, pop(1));
+            player.printCardsInHand();
 	        return player.cardsInRight[player.cardsInRight.length-1];
 	    }
 	}

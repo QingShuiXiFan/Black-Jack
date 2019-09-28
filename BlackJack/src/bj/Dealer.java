@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:57
- * @LastEditTime: 2019-09-28 12:52:49
+ * @LastEditTime: 2019-09-28 13:20:17
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -31,6 +31,9 @@ public class Dealer extends Person{
             if(cardsInHand[cardsInHand.length-1].getValue() == 1 && valueSum + 10 <=21 && valueSum + 10 >= 17){
                 valueSum += 10;
             }
+
+            printCardsInHand();
+
         }
     }
 
@@ -56,10 +59,11 @@ public class Dealer extends Person{
 
     //print what the dealer has in certain hand
     public void printCardsInHand(){
-        System.out.print("Cards in hand: ");
+        System.out.print("Dealer's cards in hand: ");
         for(int i=0;i<cardsInHand.length;i++){
             System.out.print(cardsInHand[i].getSuit()+cardsInHand[i].getRealValue() + " ");
         }
+        System.out.println();
     }
 
     //*************************************************************************** */

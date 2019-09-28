@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:51
- * @LastEditTime: 2019-09-28 12:53:59
+ * @LastEditTime: 2019-09-28 13:36:53
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -66,18 +66,24 @@ public class Player extends Person{
     }
 
     //print what the player has in certain hand
-    public void printCardsInHand(int leftOrRight){
+    public void printCardsInHand(){
         System.out.print("Cards in hand: ");
-        if(leftOrRight == 0){
+        if(cardsInRight.length == 0){
             for(int i=0;i<cardsInLeft.length;i++){
-                System.out.print(cardsInLeft[i].getSuit()+cardsInLeft[i].getRealValue());
+                System.out.print(cardsInLeft[i].getSuit()+ " " +cardsInLeft[i].getRealValue()+ " ");
             }
         }
         else{
+            System.out.print("LEFT: ");
+            for(int i=0;i<cardsInLeft.length;i++){
+                System.out.print(cardsInLeft[i].getSuit()+ " " +cardsInLeft[i].getRealValue()+ " ");
+            }
+            System.out.print("  RIGHT: ");
             for(int i=0;i<cardsInRight.length;i++){
-                System.out.print(cardsInRight[i].getSuit()+cardsInRight[i].getRealValue());
+                System.out.print(cardsInRight[i].getSuit()+ " " +cardsInRight[i].getRealValue()+ " ");
             }
         }
+        System.out.println();
     }
     //*****************************************************************
 

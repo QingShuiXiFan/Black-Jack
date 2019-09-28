@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-27 17:54:29
- * @LastEditTime: 2019-09-28 12:54:07
+ * @LastEditTime: 2019-09-28 13:40:36
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -24,12 +24,14 @@ public class play {
 	    				player_right(person, i, cards);
 	    				}
 	    				if(player_is_bust(i, is_bust, person) == true) {
+							System.out.println("Player "+ i + " bust!!!!!");
 	    					person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
 							person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
 	    				}
-	    				System.out.println(i + " out");
+	    				else System.out.println("Player "+ i + " done.");
 	    			}
-	    		}
+				}
+				System.out.println("****************************************");
 	    		dealer_action(person, cards);	    		
 	    	}
 	 
@@ -39,7 +41,7 @@ public class play {
 		 for(int i = 0; i < 2; i++) {                                       //deal 2 cards to start
 	    		for(int j = 0; j < Main.num_of_players; j++) {
 	    			if(j != Main.dealer_index) {
-	    				System.out.print("Player " + j + " left hand ");
+	    				System.out.print("Player " + j + " ");
 	    				person[j].addCard(cards.pop(1), 0);
 	    			}
 	    			else {
@@ -55,9 +57,11 @@ public class play {
 	 
 	 public static void dealer_action(Person[] person, Cards cards) {
 		 //displayCards(person[Main.dealer_index]);
-		 System.out.println("dealer action");
+		 System.out.println("Dealer's action: ");
 		 ((Dealer) person[Main.dealer_index]).autoHit(cards);
 		 if(Judge.isBust(person[Main.dealer_index].getCards()) == true) {                                 //dealer bust
+			System.out.println("Dealer's bust, all surviving players win!!!!");
+
 			for(int i = 0; i < Main.num_of_players; i++) {
 				if(i != Main.dealer_index && (player_is_bust(i, is_bust, person) == false)) {     //surviving player
 					person[i].setBalance(person[i].getBalance() + 2 * ((Player) person[i]).getBet());
@@ -110,7 +114,9 @@ public class play {
 					 is_bust[i] = 3;
 			 }
 			 else {
+				System.out.println("****************************************");
 				 System.out.println("Player " + i + " choose your action: ");
+				 person[i].printCardsInHand();
 				 actionLeft = ((Player) person[i]).chooseAction(cards, 0);
 				 if(actionLeft == 2) {
 					 if(is_stand[i] == 0)
@@ -140,7 +146,9 @@ public class play {
 						 is_bust[i] = 3;
 				 }
 				 else {
+					System.out.println("****************************************");
 					 System.out.println("Player " + i + " choose your action.");
+					 person[i].printCardsInHand();
 					 actionRight = ((Player) person[i]).chooseAction(cards, 1);
 					 if(actionRight == 2) {
 						 if(is_stand[i] == 0)
