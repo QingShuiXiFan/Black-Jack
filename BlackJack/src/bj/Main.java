@@ -36,7 +36,7 @@ class Main{
         while(true) {                                                      //round
         	bet_input(person);
         	play.round(person);
-        	if(is_cash_out() == false) {
+        	if(is_cash_out() == false && judge_balance(person) == true) {
         		continue;
         	}
         	else
@@ -152,6 +152,15 @@ class Main{
     		return false;
     	else
     		return true;
+    }
+    
+    
+    public static boolean judge_balance(Person[] person) {
+    	for(int i = 0; i < num_of_players; i++) {
+    		if(person[i].getBalance == 0)
+    			return false;
+    	}
+    	return true;
     }
     
     
