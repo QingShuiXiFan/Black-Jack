@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-22 18:06:55
- * @LastEditTime: 2019-09-28 12:49:05
+ * @LastEditTime: 2019-09-28 13:00:05
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -35,11 +35,11 @@ public class Cards{
                     c= new Card(String.valueOf(count),String.valueOf(count),count);
                 }else if (count<=13){
                     if (count==11)
-                        c= new Card("J","J",count);
+                        c= new Card("J","J",10);
                     else if(count==12)
-                        c= new Card("Q","Q",count);
+                        c= new Card("Q","Q",10);
                     else if(count==13)
-                        c= new Card("K","K",count);
+                        c= new Card("K","K",10);
                 }
                 cards.add(c);
             }
