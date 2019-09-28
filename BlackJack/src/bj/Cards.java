@@ -44,6 +44,17 @@ public class Cards{
                 cards.add(c);
             }
         }
+        for(int i=0;i<52;i++){
+            if(i%4==0){
+                cards.get(i).setSuit("♦");
+            }else if(i%4==1){
+                cards.get(i).setSuit("♠");
+            }else if(i%4==2){
+                cards.get(i).setSuit("♤");
+            }else{
+                cards.get(i).setSuit("♧");
+            }
+        }
         shuffle();
     }
 

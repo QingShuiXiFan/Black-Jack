@@ -2,14 +2,14 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:51
- * @LastEditTime: 2019-09-27 18:59:49
+ * @LastEditTime: 2019-09-27 20:09:15
  * @LastEditors: Please set LastEditors
  */
 package bj;
 
 import java.util.Scanner;
 
-class Player extends Person{
+public class Player extends Person{
     private Card[] cardsInLeft = {}; //0
     private Card[] cardsInRight = {}; //1
     private int bet;

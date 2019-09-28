@@ -11,7 +11,7 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-class Main{
+public class Main{
 	public static int num_of_players = 0, balance = 0, choose_dealer = 0, dealer_index = 0;
     public static void main(String[] args) {
     	player_input();
@@ -157,7 +157,7 @@ class Main{
     
     public static boolean judge_balance(Person[] person) {
     	for(int i = 0; i < num_of_players; i++) {
-    		if(person[i].getBalance == 0)
+    		if(person[i].getBalance() == 0)
     			return false;
     	}
     	return true;
