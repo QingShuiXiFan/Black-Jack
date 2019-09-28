@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:51
- * @LastEditTime: 2019-09-28 13:36:53
+ * @LastEditTime: 2019-09-28 15:18:29
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -119,7 +119,7 @@ public class Player extends Person{
                 System.out.print("Cannot split your cards, input another index:");
                 choice = in.nextInt();
             }
-            else if(!(this.cardsInLeft[0] == this.cardsInLeft[1] && cardsInLeft.length == 2 && cardsInRight.length == 0) && choice == 3){
+            else if(!(this.cardsInLeft[0].getValue() == cardsInLeft[1].getValue() && cardsInLeft.length == 2 && cardsInRight.length == 0) && choice == 3){
                 Scanner in = new Scanner(System.in);
                 System.out.print("Cannot split your cards, input another index:");
                 choice = in.nextInt();
@@ -150,7 +150,7 @@ public class Player extends Person{
 
     //Split (3)
     public void split(Cards cards){
-        this.cardsInRight[0] = this.cardsInLeft[1];
+        add(cardsInRight, this.cardsInLeft[1]);
         this.cardsInLeft[1] = null;
 
         // receive oen card for both hands

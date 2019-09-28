@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:06
- * @LastEditTime: 2019-09-28 10:39:34
+ * @LastEditTime: 2019-09-28 14:41:52
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -82,7 +82,7 @@ public class Judge{
     public static void printBalance(Person[] ps){
         System.out.println("Balance for every players:");
         for(int i=0; i<ps.length; i++){
-            System.out.println(ps[i].getID() + " : $" + ps[i].getBalance());
+            System.out.println("Player " + ps[i].getID() + " : $" + ps[i].getBalance());
         }
     }
 

@@ -2,7 +2,7 @@
  * @Description: Main class
  * @Author: your name
  * @Date: 2019-09-22 17:59:28
- * @LastEditTime: 2019-09-23 11:41:08
+ * @LastEditTime: 2019-09-28 14:46:41
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -48,36 +48,36 @@ public class Main{
     
     
     public static void player_input() {
-    	System.out.println("Please input the number of players.");
+    	System.out.println("Please input the number of players:");
     	while(true) {
     		try {
     			Scanner input = new Scanner(System.in);
     			num_of_players = input.nextInt();
     			if(num_of_players < 2) {
-    				System.out.println("Input error.");
+    				System.out.println("Player number should be no less than 2, reinput: ");
     				continue;
     			}
     			else
     				break;
     		}
     		catch(Exception e) {
-    			System.out.println("Input error.");
+    			System.out.println("Input error, reinput: ");
     		}
     	}
-        System.out.println("Please input the balance for each player.");
+        System.out.println("Please input the balance for each player:");
         while(true) {
     		try {
     			Scanner input = new Scanner(System.in);
     			balance = input.nextInt();
     			if(balance <= 0) {
-    				System.out.println("Input error.");
+    				System.out.println("Input error, reinput: ");
     				continue;
     			}
     			else
     				break;
     		}
     		catch(Exception e) {
-    			System.out.println("Input error.");
+    			System.out.println("Input error, reinput: ");
     		}
     	}
         System.out.println("Please choose dealer. Input 1 or 2");
@@ -106,7 +106,7 @@ public class Main{
     	int bet = 0;
     	for(int i = 0; i < num_of_players; i++) { 
     		if(i != dealer_index) {
-    			System.out.println("Player " + i + " please input your bet.");
+    			System.out.println("Player " + i + " please input your bet:");
     			while(true) {                                              //input bet for each player
     				try {
     					Scanner input = new Scanner(System.in);

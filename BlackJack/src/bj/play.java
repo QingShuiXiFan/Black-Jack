@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-27 17:54:29
- * @LastEditTime: 2019-09-28 13:40:36
+ * @LastEditTime: 2019-09-28 15:12:32
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -13,6 +13,7 @@ public class play {
 	 
 	 
 	 public static void round(Person[] person){
+		 	System.out.println("============NEW GAME START=============");
 	    	int player_action = 0;                             
 	    	Cards cards = new Cards();
 	    	deal_cards_start(person, cards);                                                //deal 2 cards to start
@@ -78,7 +79,7 @@ public class play {
 						person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
 					}
 					else if(Judge.whoWin(person, Main.dealer_index, i, 0) == i) {
-						System.out.println(i + " lose_money");
+						System.out.println("Player"+ i + " lose $" + ((Player) person[i]).getBet() + " money");
 						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() - 2 * ((Player) person[i]).getBet());
 						person[i].setBalance(person[i].getBalance() + 2 * ((Player) person[i]).getBet());
 					}
