@@ -12,22 +12,11 @@ public class play {
 	    		int inactive_player = 0;                                                 // player already bust or stand
 	    		for(int i = 0; i < Main.num_of_players; i++) {                            
 	    			if(i != Main.dealer_index) {
-	    				/*if((is_bust[i] == 1 || is_stand[i] == 1) && (person[i].getCards(1).length == 0)) {   // player is inactive
-	    					
-	    					inactive_player++;
-	    					continue;
-	    				}
-	    				else if(is_bust[i] == 3 || is_stand[i] == 3) {                                     //player is inactive
-	    					inactive_player++;
-	    					continue;
-	    				}*/
-	    				//if((is_bust[i] == 3 || is_stand[i] == 3) || ((is_bust[i] == 1 || is_stand[i] == 1) && (person[i].getCards(1).length == 0)))
-	    					//continue;
-	    				while(((is_bust[i] == 3 || is_stand[i] == 3) || ((is_bust[i] == 1 || is_stand[i] == 1) && (person[i].getCards(1).length == 0))) == false){
+	    				while(player_is_active(i, is_bust, is_stand, person) == true){
 	    				player_left(person, i, cards);
 	    				player_right(person, i, cards);
 	    				}
-	    				if(((is_bust[i] == 1) && (person[i].getCards(1).length == 0)) || is_bust[i] == 3) {
+	    				if(player_is_bust(i, is_bust, person) == true) {
 	    					person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
 							person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
 	    				}
@@ -62,15 +51,15 @@ public class play {
 		 ((Dealer) person[Main.dealer_index]).autoHit(cards);
 		 if(Judge.isBust(person[Main.dealer_index].getCards()) == true) {                                 //dealer bust
 			for(int i = 0; i < Main.num_of_players; i++) {
-				if(i != Main.dealer_index && (is_bust[i] == 0 || (is_bust[i] == 1 && person[i].getCards(1).length > 0) || is_bust[i] == 2)) {     //surviving player
+				if(i != Main.dealer_index && (player_is_bust(i, is_bust, person) == false)) {     //surviving player
 					person[i].setBalance(person[i].getBalance() + 2 * ((Player) person[i]).getBet());
 				}
 			}
 		 }
-		 
+		 else {
 			for(int i = 0; i < Main.num_of_players; i++) {	                                            //dealer not bust
-				if((((is_bust[i] == 1) && (person[i].getCards(1).length == 0)) || is_bust[i] == 3) == false) {   //if not bust
-				if(i != Main.dealer_index) {                    //compare with players' left hand
+				if(player_is_bust(i, is_bust, person) == false) {   //if not bust
+				if(i != Main.dealer_index) {                                                             //compare with players' left hand
 					System.out.println(Judge.whoWin(person, Main.dealer_index, i, 0));
 					if(Judge.whoWin(person, Main.dealer_index, i, 0) == Main.dealer_index) {
 						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
@@ -94,6 +83,7 @@ public class play {
 				}
 			}
 			}
+		 }
 	 }
 	 
 	 
@@ -153,5 +143,27 @@ public class play {
 				 }			 
 			 }
 		 }
+	 }
+	 
+	 
+	 
+	 public static boolean player_is_bust(int i, int [] is_bust, Person[] person) {          //judge whether this player bust
+		 if((is_bust[i] == 1) && (person[i].getCards(1).length == 0) || is_bust[i] == 3)
+			 return true;
+		 else
+			 return false;
+	 }
+	 
+	 
+	 public static boolean player_is_active(int i, int [] is_bust, int [] is_stand, Person[] person) {
+		 if(is_bust[i] == 3)
+			 return false;
+		 if(is_stand[i] == 3)
+			 return false;
+		 if(is_bust[i] == 1 && person[i].getCards(1).length == 0)
+			 return false;
+		 if(is_stand[i] == 1 && person[i].getCards(1).length == 0)
+			 return false;
+		 return true;
 	 }
 }
