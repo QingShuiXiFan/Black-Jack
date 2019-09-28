@@ -174,4 +174,12 @@ public class Player extends Person{
         tempArr[arr.length] = element;
         return tempArr;
     }
+    
+    //clear all the cards in both hands
+    public void clear_cards() {
+    		Card[] new_cardsInLeft = {};
+    		Card[] new_cardsInRight = {};
+    		this.cardsInLeft = new_cardsInLeft;
+    		this.cardsInRight = new_cardsInLeft;
+    }
 }

@@ -38,24 +38,47 @@ public class Main{
 			play.round(person);
 			Judge.printBalance(person);
         	if(is_cash_out() == false && judge_balance(person) == true) {
+        		play.clear_game(person);
         		continue;
         	}
-        	else
+        	else {
         		break;
-        	
+        	}
         }
         Judge.printBalance(person);
     }
     
     
     public static void player_input() {
+    	System.out.println("Please choose dealer. Input 1 or 2");
+        System.out.println("1 - computer.");
+        System.out.println("2 - randomly from players.");
+        while(true) {
+    		try {
+    			Scanner input = new Scanner(System.in);
+    			choose_dealer = input.nextInt();
+    			if(choose_dealer != 1 && choose_dealer != 2) {
+    				System.out.println("Input error.");
+    				continue;
+    			}
+    			else
+    				break;
+    		}
+    		catch(Exception e) {
+    			System.out.println("Input error.");
+    		}
+    	}
     	System.out.println("Please input the number of players:");
     	while(true) {
     		try {
     			Scanner input = new Scanner(System.in);
     			num_of_players = input.nextInt();
-    			if(num_of_players < 2) {
+    			if(num_of_players < 2 && choose_dealer == 2) {
     				System.out.println("Player number should be no less than 2, reinput: ");
+    				continue;
+    			}
+    			else if(num_of_players < 1 && choose_dealer == 1) {
+    				System.out.println("Player number should be no less than 1, reinput: ");
     				continue;
     			}
     			else
@@ -81,24 +104,8 @@ public class Main{
     			System.out.println("Input error, reinput: ");
     		}
     	}
-        System.out.println("Please choose dealer. Input 1 or 2");
-        System.out.println("1 - computer.");
-        System.out.println("2 - randomly from players.");
-        while(true) {
-    		try {
-    			Scanner input = new Scanner(System.in);
-    			choose_dealer = input.nextInt();
-    			if(choose_dealer != 1 && choose_dealer != 2) {
-    				System.out.println("Input error.");
-    				continue;
-    			}
-    			else
-    				break;
-    		}
-    		catch(Exception e) {
-    			System.out.println("Input error.");
-    		}
-    	}
+        if(choose_dealer == 1)                                                 //add computer into the player array
+        	num_of_players++;
     }
     
     
@@ -170,4 +177,7 @@ public class Main{
     	Random r = new Random();
     	return r.nextInt(num_of_players) + 1;                          
     }
+    
+    
+    
 }

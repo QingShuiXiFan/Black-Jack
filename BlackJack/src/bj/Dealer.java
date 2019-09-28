@@ -89,10 +89,21 @@ public class Dealer extends Person{
     //This method will add an element to an array and return the resulting array
     //add an item to an array
     public static Card[] add(Card[] arr, Card element){
+    	if(arr==null) {
+    		Card[] tempArr = new Card[1];
+    		tempArr[0] = element;
+    		return tempArr;
+    	}
         Card[] tempArr = new Card[arr.length+1];
         System.arraycopy(arr, 0, tempArr, 0, arr.length);
         
         tempArr[arr.length] = element;
         return tempArr;
+    }
+    
+    //clear cards
+    public void clear_cards() {
+    	Card[] new_cardsInHand = {};
+    	this.cardsInHand = new_cardsInHand;
     }
 }

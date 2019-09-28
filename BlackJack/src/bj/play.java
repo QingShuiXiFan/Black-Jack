@@ -30,6 +30,7 @@ public class play {
 							person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
 	    				}
 	    				else System.out.println("Player "+ i + " done.");
+	    				System.out.println(is_stand[i]);
 	    			}
 				}
 				System.out.println("****************************************");
@@ -182,5 +183,20 @@ public class play {
 		 if(is_stand[i] == 1 && person[i].getCards(1).length == 0)
 			 return false;
 		 return true;
+	 }
+	 
+	 
+	 
+	 public static void clear_game(Person[] person) {
+		 ((Dealer) person[Main.dealer_index]).clear_cards();
+		 for(int i = 0; i < Main.num_of_players; i++) {
+			 if(i != Main.dealer_index) {
+				 ((Player) person[i]).clearBet();
+				 ((Player) person[i]).clear_cards();
+			 }
+			 System.out.println("clear " + i + " " + is_stand[i]);
+			 is_bust[i] = 0;
+			 is_stand[i] = 0;
+		 }
 	 }
 }
