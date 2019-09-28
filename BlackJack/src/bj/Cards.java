@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-22 18:06:55
- * @LastEditTime: 2019-09-27 18:49:25
+ * @LastEditTime: 2019-09-28 12:49:05
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -64,11 +64,31 @@ public class Cards{
         Collections.shuffle(cards);
     }
 
-    public Card pop(){
+    // 0 for invisible, 1 for visible
+    public Card pop(int isVisible){
         Card c=cards.get(0);
-        //change by Jun Li
-        System.out.println("Received card: " + c.getSuit() + c.getRealValue());
+        //changed by Jun Li
+        if(isVisible == 1)
+            System.out.println("received card: " + c.getSuit() + " " + c.getRealValue());
+        else
+            System.out.println("received card: **(invisible)");
         cards.remove(0);
         return c;
     }
+
+	/** four possible actions 
+	 * @param player TODO
+	 * @param leftOrRight TODO*/
+	//Hit, return the card received (1)
+	public Card hit(Player player, int leftOrRight){
+	    //get one card for left hand
+	    if(leftOrRight == 0){
+	        player.cardsInLeft = Player.add(player.cardsInLeft, pop(1));
+	        return player.cardsInLeft[player.cardsInLeft.length-1];
+	    }
+	    else{
+	        player.cardsInRight = Player.add(player.cardsInRight, pop(1));
+	        return player.cardsInRight[player.cardsInRight.length-1];
+	    }
+	}
 }

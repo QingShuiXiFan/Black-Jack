@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:51
- * @LastEditTime: 2019-09-27 20:09:15
+ * @LastEditTime: 2019-09-28 12:53:59
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -10,8 +10,8 @@ package bj;
 import java.util.Scanner;
 
 public class Player extends Person{
-    private Card[] cardsInLeft = {}; //0
-    private Card[] cardsInRight = {}; //1
+    Card[] cardsInLeft = {}; //0
+    Card[] cardsInRight = {}; //1
     private int bet;
 
     public Player(int ID, int balance){
@@ -85,7 +85,6 @@ public class Player extends Person{
 
     //choose action. leftOrRight: 0 for lefthand, 1 for righthand
     public int chooseAction(Cards cards, int leftOrRight){
-        System.out.println("Actions:");
         System.out.println("1 - Hit"); //1
         System.out.println("2 - Stand"); //2
         System.out.println("3 - Split");//3
@@ -125,7 +124,7 @@ public class Player extends Person{
         switch(choice){
             case 1: 
             {
-                this.hit(cards, leftOrRight);
+                cards.hit(this, leftOrRight);
                 return 1;
             }
             case 2: return this.stand();
@@ -135,20 +134,6 @@ public class Player extends Person{
             }
             case 4: return doubleUp(cards, leftOrRight);
             default: return 0;
-        }
-    }
-
-    /** four possible actions */
-    //Hit, return the card received (1)
-    public Card hit(Cards cards, int leftOrRight){
-        //get one card for left hand
-        if(leftOrRight == 0){
-            this.cardsInLeft = add(cardsInLeft, cards.pop());
-            return this.cardsInLeft[cardsInLeft.length-1];
-        }
-        else{
-            this.cardsInRight = add(cardsInRight, cards.pop());
-            return this.cardsInRight[cardsInRight.length-1];
         }
     }
 
@@ -163,14 +148,14 @@ public class Player extends Person{
         this.cardsInLeft[1] = null;
 
         // receive oen card for both hands
-        hit(cards, 0);
-        hit(cards, 1);
+        cards.hit(this, 0);
+        cards.hit(this, 1);
     }
 
     //Double up (4)
     public int doubleUp(Cards cards, int leftOrRight){
         this.bet += this.bet;
-        hit(cards, leftOrRight);
+        cards.hit(this, leftOrRight);
         return stand();
     }
 

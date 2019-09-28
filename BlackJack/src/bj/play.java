@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-09-27 17:54:29
+ * @LastEditTime: 2019-09-28 12:54:07
+ * @LastEditors: Please set LastEditors
+ */
 package bj;
 
 public class play {
@@ -33,11 +40,12 @@ public class play {
 	    		for(int j = 0; j < Main.num_of_players; j++) {
 	    			if(j != Main.dealer_index) {
 	    				System.out.print("Player " + j + " left hand ");
-	    				person[j].addCard(cards.pop(), 0);
+	    				person[j].addCard(cards.pop(1), 0);
 	    			}
 	    			else {
-	    				System.out.print("Dealer ");
-	    				person[j].addCard(cards.pop());
+						System.out.print("Dealer ");
+						// changed by Jun Li
+						person[j].addCard(cards.pop(i));
 	    			}
 	    		}
 	    		//System.out.println(i);
@@ -102,7 +110,7 @@ public class play {
 					 is_bust[i] = 3;
 			 }
 			 else {
-				 System.out.println("Player " + i + " choose your action.");
+				 System.out.println("Player " + i + " choose your action: ");
 				 actionLeft = ((Player) person[i]).chooseAction(cards, 0);
 				 if(actionLeft == 2) {
 					 if(is_stand[i] == 0)

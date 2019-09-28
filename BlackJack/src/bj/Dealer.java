@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:57
- * @LastEditTime: 2019-09-27 18:59:31
+ * @LastEditTime: 2019-09-28 12:52:49
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -24,7 +24,7 @@ public class Dealer extends Person{
 
         while(valueSum < 17){
             // hit
-            cardsInHand = add(cardsInHand, cards.pop());
+            cardsInHand = add(cardsInHand, cards.pop(1));
             valueSum += cardsInHand[cardsInHand.length-1].getValue();
             
             //if receive 'A'
