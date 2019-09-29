@@ -8,11 +8,12 @@
 package bj;
 
 public class play {
-	 static int [] is_bust = new int[Main.num_of_players];                     //is_bust: 0 - neither bust, 1 - only left hand bust, 2 - only right hand bust, 3 - both hands bust 
-	 static int [] is_stand = new int[Main.num_of_players];                    //is_stand: 0 - neither stand, 1 - only left hand stand, 2 - only right hand stand, 3 - both hands stand 
-	 
-	 
+	 static int [] is_bust;                     //is_bust: 0 - neither bust, 1 - only left hand bust, 2 - only right hand bust, 3 - both hands bust
+	 static int [] is_stand;                    //is_stand: 0 - neither stand, 1 - only left hand stand, 2 - only right hand stand, 3 - both hands stand
+
 	 public static void round(Person[] person){
+		 	is_stand = new int[Main.num_of_players];
+		 	is_bust = new int[Main.num_of_players];
 		 	System.out.println("============NEW GAME START=============");
 	    	int player_action = 0;                             
 	    	Cards cards = new Cards();
