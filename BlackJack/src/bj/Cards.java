@@ -75,24 +75,4 @@ public class Cards{
         cards.remove(0);
         return c;
     }
-
-	/** four possible actions 
-	 * @param player TODO
-	 * @param leftOrRight TODO*/
-	//Hit, return the card received (1)
-	public Card hit(Player player, int leftOrRight){
-	    //get one card for left hand
-	    if(leftOrRight == 0){
-            player.cardsInLeft = Player.add(player.cardsInLeft, pop(1));
-            
-            // print cards in hand
-            player.printCardsInHand();
-	        return player.cardsInLeft[player.cardsInLeft.length-1];
-	    }
-	    else{
-            player.cardsInRight = Player.add(player.cardsInRight, pop(1));
-            player.printCardsInHand();
-	        return player.cardsInRight[player.cardsInRight.length-1];
-	    }
-	}
 }

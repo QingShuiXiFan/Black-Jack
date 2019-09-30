@@ -130,7 +130,7 @@ public class Player extends Person{
         switch(choice){
             case 1: 
             {
-                cards.hit(this, leftOrRight);
+                hit(this, leftOrRight,cards);
                 return 1;
             }
             case 2: return this.stand();
@@ -142,7 +142,25 @@ public class Player extends Person{
             default: return 0;
         }
     }
+    /** four possible actions
+     * @param player TODO
+     * @param leftOrRight TODO*/
+    //Hit, return the card received (1)
+    public Card hit(Player player, int leftOrRight,Cards cards){
+        //get one card for left hand
+        if(leftOrRight == 0){
+            player.cardsInLeft = Player.add(player.cardsInLeft, cards.pop(1));
 
+            // print cards in hand
+            player.printCardsInHand();
+            return player.cardsInLeft[player.cardsInLeft.length-1];
+        }
+        else{
+            player.cardsInRight = Player.add(player.cardsInRight, cards.pop(1));
+            player.printCardsInHand();
+            return player.cardsInRight[player.cardsInRight.length-1];
+        }
+    }
     //Stand (2)
     public int stand(){
         return 2;
@@ -154,14 +172,14 @@ public class Player extends Person{
         this.cardsInLeft[1] = null;
 
         // receive oen card for both hands
-        cards.hit(this, 0);
-        cards.hit(this, 1);
+        hit(this, 0,cards);
+        hit(this, 1,cards);
     }
 
     //Double up (4)
     public int doubleUp(Cards cards, int leftOrRight){
         this.bet += this.bet;
-        cards.hit(this, leftOrRight);
+        hit(this, leftOrRight,cards);
         return stand();
     }
 
