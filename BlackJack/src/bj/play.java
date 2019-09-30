@@ -30,7 +30,7 @@ public class play {
 							person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
 	    				}
 	    				else System.out.println("Player "+ i + " done.");
-	    				System.out.println(is_stand[i]);
+	    				//System.out.println(is_stand[i]);
 	    			}
 				}
 				System.out.println("****************************************");
@@ -74,7 +74,7 @@ public class play {
 			for(int i = 0; i < Main.num_of_players; i++) {	                                            //dealer not bust
 				if(player_is_bust(i, is_bust, person) == false) {   //if not bust
 				if(i != Main.dealer_index) {                                                             //compare with players' left hand
-					System.out.println(Judge.whoWin(person, Main.dealer_index, i, 0));
+					//System.out.println(Judge.whoWin(person, Main.dealer_index, i, 0));
 					if(Judge.whoWin(person, Main.dealer_index, i, 0) == Main.dealer_index) {
 						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
 						person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
@@ -194,7 +194,7 @@ public class play {
 				 ((Player) person[i]).clearBet();
 				 ((Player) person[i]).clear_cards();
 			 }
-			 System.out.println("clear " + i + " " + is_stand[i]);
+			 //System.out.println("clear " + i + " " + is_stand[i]);
 			 is_bust[i] = 0;
 			 is_stand[i] = 0;
 		 }
