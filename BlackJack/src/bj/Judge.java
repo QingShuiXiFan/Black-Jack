@@ -82,7 +82,10 @@ public class Judge{
     public static void printBalance(Person[] ps){
         System.out.println("Balance for every players:");
         for(int i=0; i<ps.length; i++){
+        	if(i != Main.dealer_index)
             System.out.println("Player " + ps[i].getID() + " : $" + ps[i].getBalance());
+        	else if(i == Main.dealer_index)
+        		System.out.println("Dealer : $" + ps[i].getBalance());
         }
     }
 
