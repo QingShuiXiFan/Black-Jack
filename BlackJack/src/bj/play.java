@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-27 17:54:29
- * @LastEditTime: 2019-09-28 15:12:32
+ * @LastEditTime: 2019-09-30 19:18:36
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -30,6 +30,7 @@ public class play {
 							person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
 	    				}
 	    				else System.out.println("Player "+ i + " done.");
+	    				System.out.println(is_stand[i]);
 	    			}
 				}
 	    		if(all_player_is_bust(is_bust, person) == false) {
@@ -73,6 +74,7 @@ public class play {
 			for(int i = 0; i < Main.num_of_players; i++) {	                                            //dealer not bust
 				if(player_is_bust(i, is_bust, person) == false) {   //if not bust
 				if(i != Main.dealer_index) {                                                             //compare with players' left hand
+					System.out.println(Judge.whoWin(person, Main.dealer_index, i, 0));
 					if(Judge.whoWin(person, Main.dealer_index, i, 0) == Main.dealer_index) {
 						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
 						person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
@@ -93,6 +95,7 @@ public class play {
 						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() - 2 * ((Player) person[i]).getBet());
 					}
 				}
+			}
 			}
 			}
 		 }
