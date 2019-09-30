@@ -30,11 +30,12 @@ public class play {
 							person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
 	    				}
 	    				else System.out.println("Player "+ i + " done.");
-	    				//System.out.println(is_stand[i]);
 	    			}
 				}
+	    		if(all_player_is_bust(is_bust, person) == false) {
 				System.out.println("****************************************");
 	    		dealer_action(person, cards);	    		
+	    		}
 	    	}
 	 
 	 
@@ -52,13 +53,11 @@ public class play {
 						person[j].addCard(cards.pop(i));
 	    			}
 	    		}
-	    		//System.out.println(i);
 	    	}
 	 }
 	 
 	 
 	 public static void dealer_action(Person[] person, Cards cards) {
-		 //displayCards(person[Main.dealer_index]);
 		 System.out.println("Dealer's action: ");
 		 ((Dealer) person[Main.dealer_index]).autoHit(cards);
 		 if(Judge.isBust(person[Main.dealer_index].getCards()) == true) {                                 //dealer bust
@@ -74,7 +73,6 @@ public class play {
 			for(int i = 0; i < Main.num_of_players; i++) {	                                            //dealer not bust
 				if(player_is_bust(i, is_bust, person) == false) {   //if not bust
 				if(i != Main.dealer_index) {                                                             //compare with players' left hand
-					//System.out.println(Judge.whoWin(person, Main.dealer_index, i, 0));
 					if(Judge.whoWin(person, Main.dealer_index, i, 0) == Main.dealer_index) {
 						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
 						person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
@@ -107,8 +105,6 @@ public class play {
 		 if(is_bust[i] == 1 || is_bust[i] == 3 || is_stand[i] == 1 || is_stand[i] == 3)  // left hand bust or stand
 			 player_right(person, i, cards);
 		 else {                                                            
-			 //System.out.print("Player " + i + " left hand ");
-			 //person[i].addCard(cards.pop(), 0);
 			 if(Judge.isBust(person[i].getCards(0)) == true) {                             // if left hand bust
 				 if(is_bust[i] == 0)                                                       // if no hand bust before
 					 is_bust[i] = 1;
@@ -139,8 +135,6 @@ public class play {
 			 if(is_bust[i] == 2 || is_bust[i] == 3 || is_stand[i] == 2 || is_stand[i] == 3)    // right hand bust or stand
 				 return;
 			 else {
-				 //System.out.print("Player " + i + " right hand ");
-				 //person[i].addCard(cards.pop(), 1);
 				 if(Judge.isBust(person[i].getCards(1)) == true) {                             // if right hand bust
 					 if(is_bust[i] == 0)                                                       // if no hand bust before
 						 is_bust[i] = 2;
@@ -187,6 +181,20 @@ public class play {
 	 
 	 
 	 
+	 public static boolean all_player_is_bust(int [] is_bust, Person[] person) {          //judge whether all players bust
+		 for(int j = 0; j < Main.num_of_players; j++) {
+			 if(j != Main.dealer_index) {
+				 if(((is_bust[j] == 1) && (person[j].getCards(1).length == 0)) || is_bust[j] == 3)
+					 continue;
+				 else
+					 return false;
+			 }				 
+		 }
+		 return true;			
+	 }
+	 
+	
+	 
 	 public static void clear_game(Person[] person) {
 		 ((Dealer) person[Main.dealer_index]).clear_cards();
 		 for(int i = 0; i < Main.num_of_players; i++) {
@@ -194,7 +202,6 @@ public class play {
 				 ((Player) person[i]).clearBet();
 				 ((Player) person[i]).clear_cards();
 			 }
-			 //System.out.println("clear " + i + " " + is_stand[i]);
 			 is_bust[i] = 0;
 			 is_stand[i] = 0;
 		 }
