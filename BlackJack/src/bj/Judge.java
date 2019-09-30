@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:06
- * @LastEditTime: 2019-09-28 14:41:52
+ * @LastEditTime: 2019-09-28 20:17:20
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -20,7 +20,8 @@ public class Judge{
 
     //judge if cards is natural BlackJack
     public static boolean isNaturalBJ(Card[] cards){
-        if(cards[0].getValue()+cards[1].getValue() == 21 && cards.length == 2 && (cards[0].getRealValue() == "A" || cards[1].getRealValue() == "A")){
+        if(cards.length != 2) return false;
+        if(cards[0].getValue()+cards[1].getValue() == 21 && (cards[0].getRealValue() == "A" || cards[1].getRealValue() == "A")){
             return true;
         }
         else return false;
@@ -82,7 +83,10 @@ public class Judge{
     public static void printBalance(Person[] ps){
         System.out.println("Balance for every players:");
         for(int i=0; i<ps.length; i++){
-            System.out.println("Player " + ps[i].getID() + " : $" + ps[i].getBalance());
+            if(i != 0){
+                // do not print computer's balance
+                System.out.println("Player " + ps[i].getID() + " : $" + ps[i].getBalance());
+            }
         }
     }
 

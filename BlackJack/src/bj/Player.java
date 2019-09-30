@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:51
- * @LastEditTime: 2019-09-28 15:18:29
+ * @LastEditTime: 2019-09-28 20:49:54
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -46,14 +46,22 @@ public class Player extends Person{
     public int getCardsValue(int leftOrRight){
         int valueSum = 0;
         if(leftOrRight == 0){
+            if(Judge.isNaturalBJ(cardsInLeft)) return 22;
             for(int i=0; i<cardsInLeft.length; i++){
                 valueSum += cardsInLeft[i].getValue();
             }
+             // get number of Ace, to get maximum sum if has Ace's in hand
+            int count = Judge.aceCount(cardsInLeft);
+            if(count>=1 && valueSum+10 <= 21) valueSum += 10;
         }
         else{
+            if(Judge.isNaturalBJ(cardsInRight)) return 22;
             for(int i=0; i<cardsInRight.length; i++){
                 valueSum += cardsInRight[i].getValue();
             }
+             // get number of Ace, to get maximum sum if has Ace's in hand
+            int count = Judge.aceCount(cardsInRight);
+            if(count>=1 && valueSum+10 <= 21) valueSum += 10;
         }
         return valueSum;
     }
@@ -95,7 +103,14 @@ public class Player extends Person{
         System.out.println("2 - Stand"); //2
         System.out.println("3 - Split");//3
         System.out.println("4 - Double Up");//4
-        System.out.print("Please choose your action(input index number):");
+
+        String lOrR;
+        if(leftOrRight == 0) lOrR = "left hand: ";
+        else lOrR = "right hand: ";
+        if(cardsInRight.length != 0){
+            System.out.print("Please choose your action for " + lOrR );
+        }
+        else System.out.print("Please choose your action: " );
 
         int choice;
         while(true){
@@ -150,12 +165,21 @@ public class Player extends Person{
 
     //Split (3)
     public void split(Cards cards){
-        add(cardsInRight, this.cardsInLeft[1]);
-        this.cardsInLeft[1] = null;
+        cardsInRight = add(cardsInRight, this.cardsInLeft[1]);
+        // remove the second element in left hand
+        cardsInLeft = remove(cardsInLeft, 1);
 
         // receive oen card for both hands
         cards.hit(this, 0);
+        // if natural blackjack
+        if(Judge.isNaturalBJ(cardsInLeft) == true){
+            System.out.println("Player " + this.getID() + "has BLACKJACK on left hand!!!!!!");
+        }
+
         cards.hit(this, 1);
+        if(Judge.isNaturalBJ(cardsInRight) == true){
+            System.out.println("Player " + this.getID() + "has BLACKJACK on right hand!!!!!!");
+        }
     }
 
     //Double up (4)
@@ -173,6 +197,19 @@ public class Player extends Person{
         
         tempArr[arr.length] = element;
         return tempArr;
+    }
+
+    // remove an element from array
+    public static Card[] remove(Card[] arr, int index){
+		Card[] tempArray=new Card[arr.length-1];
+		for(int i=0;i<arr.length;i++)
+		{
+			if(i<index)
+				tempArray[i]=arr[i];
+			if(i>index)
+				tempArray[i-1]=arr[i];
+		}
+		return tempArray;
     }
     
     //clear all the cards in both hands
