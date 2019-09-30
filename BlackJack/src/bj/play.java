@@ -2,18 +2,17 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-27 17:54:29
- * @LastEditTime: 2019-09-28 21:17:07
+ * @LastEditTime: 2019-09-28 15:12:32
  * @LastEditors: Please set LastEditors
  */
 package bj;
 
 public class play {
-	 static int [] is_bust;                     //is_bust: 0 - neither bust, 1 - only left hand bust, 2 - only right hand bust, 3 - both hands bust
-	 static int [] is_stand;                    //is_stand: 0 - neither stand, 1 - only left hand stand, 2 - only right hand stand, 3 - both hands stand
-
+	 static int [] is_bust = new int[Main.num_of_players];                     //is_bust: 0 - neither bust, 1 - only left hand bust, 2 - only right hand bust, 3 - both hands bust 
+	 static int [] is_stand = new int[Main.num_of_players];                    //is_stand: 0 - neither stand, 1 - only left hand stand, 2 - only right hand stand, 3 - both hands stand 
+	 
+	 
 	 public static void round(Person[] person){
-		 	is_stand = new int[Main.num_of_players];
-		 	is_bust = new int[Main.num_of_players];
 		 	System.out.println("============NEW GAME START=============");
 	    	int player_action = 0;                             
 	    	Cards cards = new Cards();
@@ -22,21 +21,9 @@ public class play {
 	    		for(int i = 0; i < Main.num_of_players; i++) {                            
 	    			if(i != Main.dealer_index) {
 	    				while(player_is_active(i, is_bust, is_stand, person) == true){
-							
-						player_left(person, i, cards);
-						// if natural blackjack
-						if(Judge.isNaturalBJ(person[i].getCards(0)) == true){
-							System.out.println("Player " + i + "has BLACKJACK on left hand!!!!!!");
-							continue;
-						}
-						player_right(person, i, cards);
-						// if natural blackjack
-						if(Judge.isNaturalBJ(person[i].getCards(1)) == true){
-							System.out.println("Player " + i + "has BLACKJACK on right hand!!!!!!");
-							continue;
-						}
-						}
-						
+	    				player_left(person, i, cards);
+	    				player_right(person, i, cards);
+	    				}
 	    				if(player_is_bust(i, is_bust, person) == true) {
 							System.out.println("Player "+ i + " bust!!!!!");
 	    					person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
@@ -79,15 +66,13 @@ public class play {
 
 			for(int i = 0; i < Main.num_of_players; i++) {
 				if(i != Main.dealer_index && (player_is_bust(i, is_bust, person) == false)) {     //surviving player
-					System.out.println("Player"+ i + " wins $" + 2 * (((Player) person[i]).getBet()) + " money");
-					person[i].setBalance(person[i].getBalance() + ((Player) person[i]).getBet());
+					person[i].setBalance(person[i].getBalance() + 2 * ((Player) person[i]).getBet());
 				}
 			}
 		 }
 		 else {
 			for(int i = 0; i < Main.num_of_players; i++) {	                                            //dealer not bust
 				if(player_is_bust(i, is_bust, person) == false) {   //if not bust
-<<<<<<< HEAD
 				if(i != Main.dealer_index) {                                                             //compare with players' left hand
 					//System.out.println(Judge.whoWin(person, Main.dealer_index, i, 0));
 					if(Judge.whoWin(person, Main.dealer_index, i, 0) == Main.dealer_index) {
@@ -104,40 +89,13 @@ public class play {
 					if(Judge.whoWin(person, Main.dealer_index, i, 1) == Main.dealer_index) {
 						person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
 						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
-=======
-					if(i != Main.dealer_index) {                                                             //compare with players' left hand
-						//System.out.println(Judge.whoWin(person, Main.dealer_index, i, 0));
-						if(Judge.whoWin(person, Main.dealer_index, i, 0) == Main.dealer_index) {
-							System.out.println("Player "+ i + " loses $" + (((Player) person[i]).getBet()) + " money");
-							person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
-							person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
-						}
-						else if(Judge.whoWin(person, Main.dealer_index, i, 0) == i) {
-							System.out.println("Player "+ i + " wins $" + 2 * ((Player) person[i]).getBet() + " money");
-							person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() - 2 * ((Player) person[i]).getBet());
-							person[i].setBalance(person[i].getBalance() + ((Player) person[i]).getBet());
-						}
-						else{
-							System.out.println("Player "+ i + " ties with Dealer, draw back $" + ((Player) person[i]).getBet() + " bet.");
-						}
->>>>>>> 6bf1ebeafc528fe9106383d7a9d4345225c070d8
 					}
-					else if(i != Main.dealer_index && person[i].getCards(1).length > 0) {            //compare with players' right hand
-						if(Judge.whoWin(person, Main.dealer_index, i, 1) == Main.dealer_index) {
-							System.out.println("Player "+ i + " loses $" + (((Player) person[i]).getBet()) + " money");
-							person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
-							person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
-						}
-						else if(Judge.whoWin(person, Main.dealer_index, i, 1) == i) {
-							System.out.println("Player "+ i + " wins $" + 2 * (((Player) person[i]).getBet()) + " money");
-							person[i].setBalance(person[i].getBalance() + ((Player) person[i]).getBet());
-							person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() - 2 * ((Player) person[i]).getBet());
-						}
-						else {
-							System.out.println("Player "+ i + " ties with Dealer, draw back $" + ((Player) person[i]).getBet() + " bet.");
-						}
+					else if(Judge.whoWin(person, Main.dealer_index, i, 1) == i) {
+						person[i].setBalance(person[i].getBalance() + 2 * ((Player) person[i]).getBet());
+						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() - 2 * ((Player) person[i]).getBet());
 					}
 				}
+			}
 			}
 		 }
 	 }
