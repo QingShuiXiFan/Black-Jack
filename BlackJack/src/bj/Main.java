@@ -2,7 +2,7 @@
  * @Description: Main class
  * @Author: your name
  * @Date: 2019-09-22 17:59:28
- * @LastEditTime: 2019-09-28 15:26:53
+ * @LastEditTime: 2019-09-30 19:43:40
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -94,7 +94,7 @@ public class Main{
     			Scanner input = new Scanner(System.in);
     			balance = input.nextInt();
     			if(balance <= 0) {
-    				System.out.println("Input error, reinput: ");
+    				System.out.println("balance should no less than 1, reinput: ");
     				continue;
     			}
     			else
@@ -120,14 +120,14 @@ public class Main{
     					Scanner input = new Scanner(System.in);
     					bet = input.nextInt();
     					if(bet <= 0 || bet > person[i].getBalance()) {
-    						System.out.println("Input error.");
+    						System.out.println("Bet should be within 1 - " + person[i].getBalance());
     						continue;
     					}
     					else
     						break;
     				}
     				catch(Exception e) {
-    					System.out.println("Input error.");
+    					System.out.println("Input error, reinput: ");
     				}
     			}
     			((Player) person[i]).setBet(bet);

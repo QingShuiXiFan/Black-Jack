@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-27 17:54:29
- * @LastEditTime: 2019-09-30 19:18:36
+ * @LastEditTime: 2019-09-30 20:29:06
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -13,7 +13,7 @@ public class play {
 	 
 	 
 	 public static void round(Person[] person){
-		 	System.out.println("============NEW GAME START=============");
+		 	System.out.println("============NEW ROUND START=============");
 	    	int player_action = 0;                             
 	    	Cards cards = new Cards();
 	    	deal_cards_start(person, cards);                                                //deal 2 cards to start
@@ -21,16 +21,17 @@ public class play {
 	    		for(int i = 0; i < Main.num_of_players; i++) {                            
 	    			if(i != Main.dealer_index) {
 	    				while(player_is_active(i, is_bust, is_stand, person) == true){
-	    				player_left(person, i, cards);
-	    				player_right(person, i, cards);
+							player_left(person, i, cards);
+							player_right(person, i, cards);
 	    				}
 	    				if(player_is_bust(i, is_bust, person) == true) {
 							System.out.println("Player "+ i + " bust!!!!!");
+							System.out.println("Player"+ i + " loses $" + ((Player) person[i]).getBet() + " money");
 	    					person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
 							person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
 	    				}
 	    				else System.out.println("Player "+ i + " done.");
-	    				System.out.println(is_stand[i]);
+	    				//System.out.println(is_stand[i]);
 	    			}
 				}
 	    		if(all_player_is_bust(is_bust, person) == false) {
@@ -66,7 +67,8 @@ public class play {
 
 			for(int i = 0; i < Main.num_of_players; i++) {
 				if(i != Main.dealer_index && (player_is_bust(i, is_bust, person) == false)) {     //surviving player
-					person[i].setBalance(person[i].getBalance() + 2 * ((Player) person[i]).getBet());
+					person[i].setBalance(person[i].getBalance() + ((Player) person[i]).getBet());
+					person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() - ((Player) person[i]).getBet());
 				}
 			}
 		 }
@@ -74,32 +76,40 @@ public class play {
 			for(int i = 0; i < Main.num_of_players; i++) {	                                            //dealer not bust
 				if(player_is_bust(i, is_bust, person) == false) {   //if not bust
 				if(i != Main.dealer_index) {                                                             //compare with players' left hand
-					System.out.println(Judge.whoWin(person, Main.dealer_index, i, 0));
+					//System.out.println(Judge.whoWin(person, Main.dealer_index, i, 0));
 					if(Judge.whoWin(person, Main.dealer_index, i, 0) == Main.dealer_index) {
+						System.out.println("Player "+ i + " loses $" + ((Player) person[i]).getBet() + " money");
 						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
 						person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
 					}
 					else if(Judge.whoWin(person, Main.dealer_index, i, 0) == i) {
-						System.out.println("Player"+ i + " lose $" + ((Player) person[i]).getBet() + " money");
-						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() - 2 * ((Player) person[i]).getBet());
-						person[i].setBalance(person[i].getBalance() + 2 * ((Player) person[i]).getBet());
+						System.out.println("Player "+ i + " wins $" + ((Player) person[i]).getBet() + " money");
+						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() - ((Player) person[i]).getBet());
+						person[i].setBalance(person[i].getBalance() + ((Player) person[i]).getBet());
+					}
+					else {//tie
+						System.out.println("Player "+ i + " draw back the bet.");
 					}
 				}
 				else if(i != Main.dealer_index && person[i].getCards(1).length > 0) {            //compare with players' right hand
 					if(Judge.whoWin(person, Main.dealer_index, i, 1) == Main.dealer_index) {
+						System.out.println("Player "+ i + " loses $" + ((Player) person[i]).getBet() + " money");
 						person[i].setBalance(person[i].getBalance() - ((Player) person[i]).getBet());
 						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() + ((Player) person[i]).getBet());
 					}
 					else if(Judge.whoWin(person, Main.dealer_index, i, 1) == i) {
-						person[i].setBalance(person[i].getBalance() + 2 * ((Player) person[i]).getBet());
-						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() - 2 * ((Player) person[i]).getBet());
+						System.out.println("Player "+ i + " wins $" + ((Player) person[i]).getBet() + " money");
+						person[i].setBalance(person[i].getBalance() + ((Player) person[i]).getBet());
+						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() - ((Player) person[i]).getBet());
+					}
+					else {//tie
+						System.out.println("Player "+ i + "draw back the bet.");
 					}
 				}
 			}
 			}
 			}
 		 }
-	 }
 	 
 	 
 	 
@@ -109,6 +119,7 @@ public class play {
 			 player_right(person, i, cards);
 		 else {                                                            
 			 if(Judge.isBust(person[i].getCards(0)) == true) {                             // if left hand bust
+				System.out.println("Player " + i + " left hand bust!!!");
 				 if(is_bust[i] == 0)                                                       // if no hand bust before
 					 is_bust[i] = 1;
 				 else if(is_bust[i] == 2)                                                  // if right already bust before
@@ -139,6 +150,7 @@ public class play {
 				 return;
 			 else {
 				 if(Judge.isBust(person[i].getCards(1)) == true) {                             // if right hand bust
+					System.out.println("Player " + i + " right hand bust!!!");
 					 if(is_bust[i] == 0)                                                       // if no hand bust before
 						 is_bust[i] = 2;
 					 else if(is_bust[i] == 1)                                                  // if left already bust before

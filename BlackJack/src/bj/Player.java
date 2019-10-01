@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:51
- * @LastEditTime: 2019-09-30 19:19:05
+ * @LastEditTime: 2019-09-30 20:10:10
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -91,6 +91,11 @@ public class Player extends Person{
 
     //choose action. leftOrRight: 0 for lefthand, 1 for righthand
     public int chooseAction(Cards cards, int leftOrRight){
+        if(leftOrRight == 0){
+            System.out.println("left hand:");
+        }
+        else System.out.println("right hand:");
+
         System.out.println("1 - Hit"); //1
         System.out.println("2 - Stand"); //2
         System.out.println("3 - Split");//3
@@ -168,8 +173,8 @@ public class Player extends Person{
 
     //Split (3)
     public void split(Cards cards){
-        add(cardsInRight, this.cardsInLeft[1]);
-        this.cardsInLeft[1] = null;
+        cardsInRight =  add(cardsInRight, cardsInLeft[1]);
+        cardsInLeft =  remove(cardsInLeft , 1);
 
         // receive oen card for both hands
         hit(this, 0,cards);
@@ -190,6 +195,12 @@ public class Player extends Person{
         System.arraycopy(arr, 0, tempArr, 0, arr.length);
         
         tempArr[arr.length] = element;
+        return tempArr;
+    }
+
+    public static Card[] remove(Card[] arr, int index){
+        Card[] tempArr = new Card[arr.length-1];
+        System.arraycopy(arr, 0, tempArr, 0, arr.length-1);
         return tempArr;
     }
     

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:57
- * @LastEditTime: 2019-09-28 15:23:32
+ * @LastEditTime: 2019-09-30 20:14:09
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -19,6 +19,7 @@ public class Dealer extends Person{
     the Player, and continues to hit until the hand value of the Dealer
     reaches or exceeds 17.*/
     public void autoHit(Cards cards){
+        printCardsInHand();
         // if natural blackjack
         if(Judge.isNaturalBJ(cardsInHand) == true){
             System.out.println("Dealer has NATURAL BLACKJACK!!!");
@@ -35,13 +36,14 @@ public class Dealer extends Person{
             valueSum += cardsInHand[cardsInHand.length-1].getValue();
 
             //if receive 'A'
-            if(cardsInHand[cardsInHand.length-1].getValue() == 1 && valueSum + 10 <=21 && valueSum + 10 >= 17){
-                valueSum += 10;
-            }
-            else aceCount++;
+            if(cardsInHand[cardsInHand.length-1].getValue() == 1){
+                if(valueSum + 10 <=21 && valueSum + 10 >= 17){
+                    valueSum += 10;
+                }
+            }   
 
             // if receive a card that leads to bust, then treat Ace as 1 until valueSum does not exceeds 21 or no more Ace left
-            while(valueSum > 21 && aceCount>0){
+            if(valueSum > 21 && aceCount>0){
                 valueSum -= 10;
                 aceCount--;
             }
@@ -61,7 +63,7 @@ public class Dealer extends Person{
 
         // get number of Ace, to get maximum sum if has Ace's in hand
         int count = Judge.aceCount(cardsInHand);
-        if(count>=1) valueSum += 10;
+        if(count>=1 && valueSum+10<=21) valueSum += 10;
         
         return valueSum;
     }
