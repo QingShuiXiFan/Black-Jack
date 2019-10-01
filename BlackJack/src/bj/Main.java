@@ -2,7 +2,7 @@
  * @Description: Main class
  * @Author: your name
  * @Date: 2019-09-22 17:59:28
- * @LastEditTime: 2019-09-30 21:01:20
+ * @LastEditTime: 2019-09-30 21:14:22
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -35,10 +35,10 @@ public class Main{
         }
         while(true) {                                                      //round
         	bet_input(person);
-			play.round(person);
+			Play.round(person);
 			Judge.printBalance(person);
         	if(is_cash_out() == false && judge_balance(person) == true) {
-        		play.clear_game(person);
+        		Play.clear_game(person);
         		continue;
         	}
         	else {
