@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:06
- * @LastEditTime: 2019-09-30 19:19:41
+ * @LastEditTime: 2019-09-30 20:53:16
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -20,7 +20,7 @@ public class Judge{
 
     //judge if cards is natural BlackJack
     public static boolean isNaturalBJ(Card[] cards){
-        if(cards[0].getValue()+cards[1].getValue() == 21 && cards.length == 2 && (cards[0].getRealValue() == "A" || cards[1].getRealValue() == "A")){
+        if(cards[0].getValue()+cards[1].getValue() == 11 && cards.length == 2 && (cards[0].getRealValue() == "A" || cards[1].getRealValue() == "A")){
             return true;
         }
         else return false;

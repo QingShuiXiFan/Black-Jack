@@ -2,7 +2,7 @@
  * @Description: Main class
  * @Author: your name
  * @Date: 2019-09-22 17:59:28
- * @LastEditTime: 2019-09-30 19:43:40
+ * @LastEditTime: 2019-09-30 21:01:20
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -17,7 +17,7 @@ public class Main{
     	player_input();
         Person[] person = new Person[num_of_players];                   //initialize n Player instances
         if(choose_dealer == 1) {
-        	person[0] = new Dealer(0, balance);
+        	person[0] = new Dealer(0, 9999999);
         	for(int i = 1; i < num_of_players; i++) {
         		person[i] = new Player(i, balance);
         	}
@@ -42,6 +42,9 @@ public class Main{
         		continue;
         	}
         	else {
+				if(judge_balance(person) == false){
+					System.out.println("Someone runs out of money, cash out.");
+				}
         		break;
         	}
         }
@@ -114,7 +117,7 @@ public class Main{
     	int bet = 0;
     	for(int i = 0; i < num_of_players; i++) { 
     		if(i != dealer_index) {
-    			System.out.println("Player " + i + " please input your bet:");
+    			System.out.println("Player " + i + " please input your bet(you have $" + person[i].getBalance() + "):");
     			while(true) {                                              //input bet for each player
     				try {
     					Scanner input = new Scanner(System.in);

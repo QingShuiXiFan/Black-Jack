@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-27 17:54:29
- * @LastEditTime: 2019-09-30 20:29:06
+ * @LastEditTime: 2019-09-30 20:55:32
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -88,7 +88,7 @@ public class play {
 						person[i].setBalance(person[i].getBalance() + ((Player) person[i]).getBet());
 					}
 					else {//tie
-						System.out.println("Player "+ i + " draw back the bet.");
+						System.out.println("Player "+ i + " draws back the bet.");
 					}
 				}
 				else if(i != Main.dealer_index && person[i].getCards(1).length > 0) {            //compare with players' right hand
@@ -103,7 +103,7 @@ public class play {
 						person[Main.dealer_index].setBalance(person[Main.dealer_index].getBalance() - ((Player) person[i]).getBet());
 					}
 					else {//tie
-						System.out.println("Player "+ i + "draw back the bet.");
+						System.out.println("Player "+ i + "draws back the bet.");
 					}
 				}
 			}
@@ -115,14 +115,16 @@ public class play {
 	 
 	 public static void player_left(Person[] person, int i, Cards cards) {                     // i indicate the index of this player in person[]
 		 int actionLeft = 0;
+		 
 		 if(is_bust[i] == 1 || is_bust[i] == 3 || is_stand[i] == 1 || is_stand[i] == 3)  // left hand bust or stand
 			 player_right(person, i, cards);
 		 else {                                                            
 			 if(Judge.isBust(person[i].getCards(0)) == true) {                             // if left hand bust
-				System.out.println("Player " + i + " left hand bust!!!");
-				 if(is_bust[i] == 0)                                                       // if no hand bust before
+				if(person[i].getCards(1).length != 0)
+					System.out.println("Player " + i + " left hand bust!!!");
+				if(is_bust[i] == 0)                                                       // if no hand bust before
 					 is_bust[i] = 1;
-				 else if(is_bust[i] == 2)                                                  // if right already bust before
+				else if(is_bust[i] == 2)                                                  // if right already bust before
 					 is_bust[i] = 3;
 			 }
 			 else {
@@ -130,6 +132,9 @@ public class play {
 				 System.out.println("Player " + i + " choose your action: ");
 				 person[i].printCardsInHand();
 				 actionLeft = ((Player) person[i]).chooseAction(cards, 0);
+				 if(actionLeft == 3){
+					 player_left(person, i, cards);
+				 }
 				 if(actionLeft == 2) {
 					 if(is_stand[i] == 0)
 						 is_stand[i] = 1;
