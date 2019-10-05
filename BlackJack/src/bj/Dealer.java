@@ -9,7 +9,7 @@ package bj;
 
 public class Dealer extends Person{
     private Card[] cardsInHand = {};
-     
+    static int winnumber=31;
     public Dealer(int ID, int balance){
         super(ID, balance);
     }
@@ -37,13 +37,13 @@ public class Dealer extends Person{
 
             //if receive 'A'
             if(cardsInHand[cardsInHand.length-1].getValue() == 1){
-                if(valueSum + 10 <=21 && valueSum + 10 >= 17){
+                if(valueSum + 10 <=winnumber && valueSum + 10 >= 17){
                     valueSum += 10;
                 }
             }   
 
             // if receive a card that leads to bust, then treat Ace as 1 until valueSum does not exceeds 21 or no more Ace left
-            if(valueSum > 21 && aceCount>0){
+            if(valueSum > winnumber && aceCount>0){
                 valueSum -= 10;
                 aceCount--;
             }
@@ -63,7 +63,7 @@ public class Dealer extends Person{
 
         // get number of Ace, to get maximum sum if has Ace's in hand
         int count = Judge.aceCount(cardsInHand);
-        if(count>=1 && valueSum+10<=21) valueSum += 10;
+        if(count>=1 && valueSum+10<=winnumber) valueSum += 10;
         
         return valueSum;
     }

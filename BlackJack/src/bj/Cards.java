@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Cards{
     //private Card[] cards; // whole 52 cards
-    private List<Card> cards;
+    static private List<Card> cards=new ArrayList<Card>();
 
     @Override
     public String toString() {
@@ -21,9 +21,12 @@ public class Cards{
         System.out.println(cards.get(i).getRealValue());
         return super.toString();
     }
-
     public Cards(){
-        cards=new ArrayList<Card>();
+        getone();
+        getone();
+        shuffle();
+    }
+    private void getone(){
         int count=0;
         for(int i=4;i<=52;i+=4){
             count++;
@@ -55,7 +58,6 @@ public class Cards{
                 cards.get(i).setSuit("♧");
             }
         }
-        shuffle();
     }
 
     /** methods */
@@ -66,6 +68,9 @@ public class Cards{
 
     // 0 for invisible, 1 for visible
     public Card pop(int isVisible){
+        if(cards.size()==0){
+            new Cards();
+        }
         Card c=cards.get(0);
         //changed by Jun Li
         if(isVisible == 1)

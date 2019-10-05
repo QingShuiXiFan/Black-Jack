@@ -7,22 +7,20 @@
  */
 package bj;
 
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main{
-	public static int num_of_players = 0, balance = 0, choose_dealer = 0, dealer_index = 0;
+	public static int num_of_players = 0, balance = 0, dealer_index = 0;
     public static void main(String[] args) {
     	player_input();
         Person[] person = new Person[num_of_players];                   //initialize n Player instances
-        if(choose_dealer == 1) {
-        	person[0] = new Dealer(0, 9999999);
-        	for(int i = 1; i < num_of_players; i++) {
-        		person[i] = new Player(i, balance);
-        	}
-        }
-        else if(choose_dealer == 2) {
+//        if(choose_dealer == 1) {
+//        	person[0] = new Dealer(0, balance*3);
+//        	for(int i = 1; i < num_of_players; i++) {
+//        		person[i] = new Player(i, balance);
+//        	}
+//        }
+        //else if(choose_dealer == 2) {
         	dealer_index = random_choose_dealer(num_of_players) - 1;
         	System.out.println("Player " + dealer_index + " is dealer.");
         	person[dealer_index] = new Dealer(dealer_index, balance);
@@ -32,13 +30,14 @@ public class Main{
         		else
         			continue;
         	}
-        }
+        //}
         while(true) {                                                      //round
         	bet_input(person);
 			Play.round(person);
 			Judge.printBalance(person);
         	if(is_cash_out() == false && judge_balance(person) == true) {
         		Play.clear_game(person);
+        		decideBanker(person);
         		continue;
         	}
         	else {
@@ -50,45 +49,67 @@ public class Main{
         }
         Judge.printBalance(person);
     }
-    
-    
-    public static void player_input() {
-    	System.out.println("Please choose dealer. Input 1 or 2");
-        System.out.println("1 - computer.");
-        System.out.println("2 - randomly from players.");
-        while(true) {
-    		try {
-    			Scanner input = new Scanner(System.in);
-    			choose_dealer = input.nextInt();
-    			if(choose_dealer != 1 && choose_dealer != 2) {
-    				System.out.println("Input error.");
-    				continue;
-    			}
-    			else
-    				break;
-    		}
-    		catch(Exception e) {
-    			System.out.println("Input error.");
-    		}
-    	}
+
+	private static void decideBanker(Person[] person) {
+		Scanner input = new Scanner(System.in);
+		Person p[]=Arrays.copyOf(person,person.length);
+		Arrays.sort(p, new Comparator<Person>() {
+			@Override
+			public int compare(Person o1, Person o2) {
+				if(o1.getBalance()>o2.getBalance())
+					return -1;
+				else
+					return 1;
+			}
+		});
+		for(int i=0;i<p.length;i++){
+			System.out.println(p[i].getID()+"wants to be Banker?(y/n):");
+			String a=input.nextLine();
+			if(a.equals("y")){
+				dealer_index=p[i].getID();
+				break;
+			}else if(a.equals("n")){
+				continue;
+			}else{
+				System.out.println("wrong answer, input again!");
+			}
+		}
+	}
+
+
+	public static void player_input() {
+//    	System.out.println("Please choose dealer. Input 1 or 2");
+//        System.out.println("1 - computer.");
+//        System.out.println("2 - randomly from players.");
+//        while(true) {
+//    		try {
+//    			Scanner input = new Scanner(System.in);
+//    			choose_dealer = input.nextInt();
+//    			if(choose_dealer != 1 && choose_dealer != 2) {
+//    				System.out.println("Input error.");
+//    				continue;
+//    			}
+//    			else
+//    				break;
+//    		}
+//    		catch(Exception e) {
+//    			System.out.println("Input error.");
+//    		}
+//    	}
     	System.out.println("Please input the number of players:");
     	while(true) {
     		try {
     			Scanner input = new Scanner(System.in);
     			num_of_players = input.nextInt();
-    			if(num_of_players < 2 && choose_dealer == 2) {
-    				System.out.println("Player number should be no less than 2, reinput: ");
-    				continue;
-    			}
-    			else if(num_of_players < 1 && choose_dealer == 1) {
-    				System.out.println("Player number should be no less than 1, reinput: ");
+    			if(num_of_players < 2) {
+    				System.out.println("Player number should be no less than 2, input again: ");
     				continue;
     			}
     			else
     				break;
     		}
     		catch(Exception e) {
-    			System.out.println("Input error, reinput: ");
+    			System.out.println("Input error, input again: ");
     		}
     	}
         System.out.println("Please input the balance for each player:");
@@ -97,18 +118,18 @@ public class Main{
     			Scanner input = new Scanner(System.in);
     			balance = input.nextInt();
     			if(balance <= 0) {
-    				System.out.println("balance should no less than 1, reinput: ");
+    				System.out.println("balance should no less than 1, input again: ");
     				continue;
     			}
     			else
     				break;
     		}
     		catch(Exception e) {
-    			System.out.println("Input error, reinput: ");
+    			System.out.println("Input error, input again: ");
     		}
     	}
-        if(choose_dealer == 1)                                                 //add computer into the player array
-        	num_of_players++;
+//        if(choose_dealer == 1)                                                 //add computer into the player array
+//        	num_of_players++;
     }
     
     
@@ -130,7 +151,7 @@ public class Main{
     						break;
     				}
     				catch(Exception e) {
-    					System.out.println("Input error, reinput: ");
+    					System.out.println("Input error, input again: ");
     				}
     			}
     			((Player) person[i]).setBet(bet);

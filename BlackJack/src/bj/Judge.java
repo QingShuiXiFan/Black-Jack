@@ -9,12 +9,13 @@ package bj;
 
 public class Judge{
     //judge if dealer or player has bust
+    static int winnumber=31;
     public static boolean isBust(Card[] cards){
         int sum = 0;
         for(int i=0; i<cards.length; i++){
             sum += cards[i].getValue();
         }
-        if(sum > 21)return true;
+        if(sum > winnumber)return true;
         else return false;
     }
 
@@ -37,7 +38,7 @@ public class Judge{
 
         //calculate max value of cards if exists 'A's
         for(int i=0 ; i < aceCount(ps[dealer_index].getCards()); i++){
-            if(dealerValue + 10 <= 21) dealerValue += 10;
+            if(dealerValue + 10 <= winnumber) dealerValue += 10;
             else break;
         }
 
@@ -47,7 +48,7 @@ public class Judge{
 
             //calculate max value of cards if exists 'A's
             for(int i=0 ; i < aceCount(ps[dealer_index].getCards(leftOrRight)); i++){
-                if(playerValue + 10 <= 21) playerValue += 10;
+                if(playerValue + 10 <= winnumber) playerValue += 10;
                 else break;
             }
 
