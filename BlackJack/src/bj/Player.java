@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:51
- * @LastEditTime: 2019-09-30 20:10:10
+ * @LastEditTime: 2019-10-05 21:22:15
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -147,9 +147,12 @@ public class Player extends Person{
             default: return 0;
         }
     }
+    
     /** four possible actions
-     * @param player TODO
-     * @param leftOrRight TODO*/
+     * @param player :Player instance
+     * @param leftOrRight : lefthand(0) or righthand(1)
+     * @param cards : Cards instance
+     * */
     //Hit, return the card received (1)
     public Card hit(Player player, int leftOrRight,Cards cards){
         //get one card for left hand

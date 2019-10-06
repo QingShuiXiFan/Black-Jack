@@ -1,44 +1,95 @@
 /*
- * @Description: In User Settings Edit
+ * @Description: Class contains some tool methods
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:06
- * @LastEditTime: 2019-09-30 20:53:16
+ * @LastEditTime: 2019-10-05 21:44:04
  * @LastEditors: Please set LastEditors
  */
 package bj;
 
 public class Judge{
-    //judge if dealer or player has bust
-    static int winnumber=31;
+    static int winNumber=31;
+
+    /**judge if dealer or player is bust
+     * @param cards: Cards instance
+     */
     public static boolean isBust(Card[] cards){
         int sum = 0;
         for(int i=0; i<cards.length; i++){
             sum += cards[i].getValue();
         }
-        if(sum > winnumber)return true;
+        if(sum > winNumber)return true;
         else return false;
     }
 
-    //judge if cards is natural BlackJack
+    /** judge if cards is natural BlackJack
+     * @param cards: Cards instance
+    */
     public static boolean isNaturalBJ(Card[] cards){
-        if(cards[0].getValue()+cards[1].getValue() == 11 && cards.length == 2 && (cards[0].getRealValue() == "A" || cards[1].getRealValue() == "A")){
+        
+        int valueSum = 0; // calculate sum of cards' value in hand
+        for(int i=0;i<cards.length;i++){
+            valueSum += cards[i].getValue();
+        }
+
+        if(valueSum == 21 && cards.length == 21/10 && aceCount(cards) == 1){
+            //when valueSum = 31 and has 3 cards in hand which contains one and only one Ace
             return true;
         }
         else return false;
     }
 
-    // judge who is winner if exists two or more persons who does not bust
-    // input: Person[] ps: all Person instances
-    //        dealer_index
-    //        player_index
-    //        leftOrRight: left hand or right hand
-    // output: winner index in Person[], if ties, return -1
+    /** judge if cards is natural TriantaEna
+     * @param Card[] cards: Cards instance
+    */
+    public static boolean isNaturalTE(Card[] cards){
+        int valueSum = 0; // calculate sum of cards' value in hand
+        for(int i=0;i<cards.length;i++){
+            valueSum += cards[i].getValue();
+        }
+
+        if(valueSum == winNumber && cards.length == winNumber/10 && aceCount(cards) == 1){
+            //when valueSum = 31 and has 3 cards in hand which contains one and only one Ace
+            return true;
+        }
+        else return false;
+    }
+
+    /** judge if cards is lucky14
+     * @param Card[] cards: Cards instance
+    */
+    public static boolean isLucky14(Card[] cards){
+        int valueSum = 0; // calculate sum of cards' value in hand
+        String suit = cards[0].getSuit();
+        for(int i=0;i<cards.length;i++){
+            valueSum += cards[i].getValue();
+            // if suit is different, then return false
+            if(!cards[i].getSuit().equals(suit)){
+                return false;
+            }
+        }
+
+        if(valueSum == 14){
+            return true;
+        }
+        else return false;
+    }
+
+    //
+
+    /** judge who is winner if exists two or more persons who does not bust
+    * @param Person[] ps: all Person instances
+    * @param int dealer_index
+    * @param int player_index
+    * @param int leftOrRight: left hand or right hand
+    * @return int: winner index in Person[], if ties, return -1
+    */
     public static int whoWin(Person[] ps, int dealer_index, int player_index, int leftOrRight){
         int dealerValue = ps[dealer_index].getCardsValue();
 
         //calculate max value of cards if exists 'A's
         for(int i=0 ; i < aceCount(ps[dealer_index].getCards()); i++){
-            if(dealerValue + 10 <= winnumber) dealerValue += 10;
+            if(dealerValue + 10 <= winNumber) dealerValue += 10;
             else break;
         }
 
@@ -48,7 +99,7 @@ public class Judge{
 
             //calculate max value of cards if exists 'A's
             for(int i=0 ; i < aceCount(ps[dealer_index].getCards(leftOrRight)); i++){
-                if(playerValue + 10 <= winnumber) playerValue += 10;
+                if(playerValue + 10 <= winNumber) playerValue += 10;
                 else break;
             }
 
