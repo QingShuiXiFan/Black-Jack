@@ -1,5 +1,5 @@
-# Trianta Ena
-Trianta Ena game for CS591 P1 OOD in Java, assignment 4.
+# Black Jack
+Black Jack game for CS591 P1 OOD in Java, assignment 3.
 
 ## TEAM MEMBER
 Jun Li, U73344054 <br>
