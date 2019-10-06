@@ -1,5 +1,5 @@
-# Black-Jack
-Black Jack game for CS591 P1 OOD in Java, assignment 3.
+# Trianta Ena
+Trianta Ena game for CS591 P1 OOD in Java, assignment 4.
 
 ## TEAM MEMBER
 Jun Li, U73344054 <br>
@@ -8,7 +8,6 @@ Tian Chen, U49179019 <br>
 
 ## File structure
 src/ <br>
-├── bj <br>
 ├──── Main.java <br>
 ├──── Card.java <br>
 ├──── Cards.java <br>
