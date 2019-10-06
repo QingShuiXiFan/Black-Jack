@@ -2,14 +2,14 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:57
- * @LastEditTime: 2019-09-30 20:14:09
+ * @LastEditTime: 2019-10-05 21:26:46
  * @LastEditors: Please set LastEditors
  */
 package bj;
 
 public class Dealer extends Person{
     private Card[] cardsInHand = {};
-    static int winnumber=31;
+    static int winNumber=31;
     public Dealer(int ID, int balance){
         super(ID, balance);
     }
@@ -37,13 +37,13 @@ public class Dealer extends Person{
 
             //if receive 'A'
             if(cardsInHand[cardsInHand.length-1].getValue() == 1){
-                if(valueSum + 10 <=winnumber && valueSum + 10 >= 17){
+                if(valueSum + 10 <=winNumber && valueSum + 10 >= 17){
                     valueSum += 10;
                 }
             }   
 
             // if receive a card that leads to bust, then treat Ace as 1 until valueSum does not exceeds 21 or no more Ace left
-            if(valueSum > winnumber && aceCount>0){
+            if(valueSum > winNumber && aceCount>0){
                 valueSum -= 10;
                 aceCount--;
             }
@@ -63,7 +63,7 @@ public class Dealer extends Person{
 
         // get number of Ace, to get maximum sum if has Ace's in hand
         int count = Judge.aceCount(cardsInHand);
-        if(count>=1 && valueSum+10<=winnumber) valueSum += 10;
+        if(count>=1 && valueSum+10<=winNumber) valueSum += 10;
         
         return valueSum;
     }
