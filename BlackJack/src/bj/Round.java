@@ -2,12 +2,12 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-27 17:54:29
- * @LastEditTime: 2019-09-30 21:13:53
+ * @LastEditTime: 2019-10-06 22:03:44
  * @LastEditors: Please set LastEditors
  */
 package bj;
 
-public class Play {
+public class Round {
 	 static int [] is_bust = new int[Main.num_of_players];                     //is_bust: 0 - neither bust, 1 - only left hand bust, 2 - only right hand bust, 3 - both hands bust 
 	 static int [] is_stand = new int[Main.num_of_players];                    //is_stand: 0 - neither stand, 1 - only left hand stand, 2 - only right hand stand, 3 - both hands stand 
 	 
@@ -128,10 +128,8 @@ public class Play {
 					 is_bust[i] = 3;
 			 }
 			 else {
-				System.out.println("****************************************");
-				 System.out.println("Player " + i + " choose your action: ");
 				 person[i].printCardsInHand();
-				 actionLeft = ((Player) person[i]).chooseAction(cards, 0);
+				 actionLeft = ((Player) person[i]).chooseAction(cards);
 				 if(actionLeft == 3){
 					 player_left(person, i, cards);
 				 }
@@ -162,10 +160,8 @@ public class Play {
 						 is_bust[i] = 3;
 				 }
 				 else {
-					System.out.println("****************************************");
-					 System.out.println("Player " + i + " choose your action.");
 					 person[i].printCardsInHand();
-					 actionRight = ((Player) person[i]).chooseAction(cards, 1);
+					 actionRight = ((Player) person[i]).chooseAction(cards);
 					 if(actionRight == 2) {
 						 if(is_stand[i] == 0)
 							 is_stand[i] = 2;
