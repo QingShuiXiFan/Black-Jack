@@ -2,7 +2,7 @@
  * @Description: Class contains some tool methods
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:06
- * @LastEditTime: 2019-10-05 21:44:04
+ * @LastEditTime: 2019-10-06 21:50:49
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -150,5 +150,62 @@ public class Judge{
             }
         }
         return count;
+    }
+
+    /**
+     * Calculate value in hand, treat Ace as 1
+     * @param cards
+     * @return sum value of cards in hand
+     */
+    public static int getCardsValue(Card[] cards){
+        int valueSum = 0;
+            for(int i=0; i<cards.length; i++){
+                valueSum += cards[i].getValue();
+            }
+        return valueSum;
+    }
+
+    /**
+     * Calculate value in hand, treat all Ace as 11
+     * @param cards
+     * @return sum value of cards in hand
+     */
+    public static int getMaxCardsValueForBJ(Card[] cards){
+        int valueSum = getCardsValue(cards);
+
+        for(int i=0;i<aceCount(cards);i++){
+            valueSum += 10;
+        }
+        return valueSum;
+    }
+
+    /**
+     * Calculate value in hand, treat all Ace as 11
+     * @param cards
+     * @return sum value of cards in hand
+     */
+    public static int getMaxCardsValueForTE(Card[] cards){
+        int valueSum = getCardsValue(cards);
+
+        // if exists one or more Ace
+        for(int i = 0;i<aceCount(cards);i++){
+            valueSum += 10;
+        }
+        return valueSum;
+    }
+
+    /**
+     * Calculate value in hand, treat one Ace as 1, others as 11
+     * @param cards
+     * @return sum value of cards in hand
+     */
+    public static int getLeastCardsValueForTE(Card[] cards){
+        int valueSum = getCardsValue(cards);
+        
+        // if exists one or more Ace
+        for(int i = 0;i<aceCount(cards)-1;i++){
+            valueSum += 10;
+        }
+        return valueSum;
     }
 }
