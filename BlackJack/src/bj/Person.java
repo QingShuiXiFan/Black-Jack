@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:45
- * @LastEditTime: 2019-09-27 18:53:35
+ * @LastEditTime: 2019-10-06 23:47:02
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -32,6 +32,7 @@ public class Person{
     public void addCard(Card card){}
     public int getCardsValue(){return 0;}
     public int getCardsValue(int leftOrRight){return 0;}
+    public int getMaxCardsValueWithoutBust(){return 0;};
     public Card[] getCards(){
         Card[] cards = {};
         return cards;

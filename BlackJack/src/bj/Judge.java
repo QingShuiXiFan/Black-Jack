@@ -2,10 +2,12 @@
  * @Description: Class contains some tool methods
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:06
- * @LastEditTime: 2019-10-06 21:50:49
+ * @LastEditTime: 2019-10-06 23:56:03
  * @LastEditors: Please set LastEditors
  */
 package bj;
+
+import javax.lang.model.util.ElementScanner6;
 
 public class Judge{
     static int winNumber=31;
@@ -14,10 +16,8 @@ public class Judge{
      * @param cards: Cards instance
      */
     public static boolean isBust(Card[] cards){
-        int sum = 0;
-        for(int i=0; i<cards.length; i++){
-            sum += cards[i].getValue();
-        }
+        int sum = getLeastCardsValueForTE(cards);
+
         if(sum > winNumber)return true;
         else return false;
     }
@@ -84,41 +84,29 @@ public class Judge{
     * @param int leftOrRight: left hand or right hand
     * @return int: winner index in Person[], if ties, return -1
     */
-    public static int whoWin(Person[] ps, int dealer_index, int player_index, int leftOrRight){
-        int dealerValue = ps[dealer_index].getCardsValue();
+    public static int whoWin(Person[] ps, int dealer_index, int player_index){
+        int dealerValue = ps[dealer_index].getMaxCardsValueWithoutBust();
+        int playerValue = ps[player_index].getMaxCardsValueWithoutBust();
 
-        //calculate max value of cards if exists 'A's
-        for(int i=0 ; i < aceCount(ps[dealer_index].getCards()); i++){
-            if(dealerValue + 10 <= winNumber) dealerValue += 10;
-            else break;
-        }
-
-        int playerValue = 0;
-        if(Judge.isBust(ps[player_index].getCards(leftOrRight)) == false){
-            playerValue = ps[player_index].getCardsValue(leftOrRight);
-
-            //calculate max value of cards if exists 'A's
-            for(int i=0 ; i < aceCount(ps[dealer_index].getCards(leftOrRight)); i++){
-                if(playerValue + 10 <= winNumber) playerValue += 10;
-                else break;
-            }
-
-            if(playerValue > dealerValue)return player_index;
-            else if(playerValue == dealerValue){
-                //if player is natural bj and dealer is not
-                if(Judge.isNaturalBJ(ps[player_index].getCards(leftOrRight)) && !Judge.isNaturalBJ(ps[dealer_index].getCards())){
-                    return player_index;
-                }
-                //if dealer is neatural bj and player is not
-                else if(!Judge.isNaturalBJ(ps[player_index].getCards(leftOrRight)) && Judge.isNaturalBJ(ps[dealer_index].getCards())){
-                    return dealer_index;
-                }
-                else return -1;
-
-            }
-            else return dealer_index;
-        }
-        else return dealer_index;
+           if(isLucky14(ps[dealer_index].getCards())){ // dealer is lucky 14, dealer always win
+                return dealer_index;
+           }
+           else if(isLucky14(ps[player_index].getCards())){ // player is lucky 14, player wins
+               return player_index;
+           }
+           else if(isNaturalTE(ps[dealer_index].getCards())){ // dealer is Natural TE, dealer wins
+               return dealer_index;
+           }
+           else if(isNaturalTE(ps[player_index].getCards())){ // player is Natural TE, player wins
+               return player_index;
+           }
+           else if(playerValue > dealerValue){
+               return playerValue;
+           }
+           else if(playerValue == dealerValue){ // ties
+               return -1;
+           }
+           else return dealer_index;
     }
 
     // settle balance for dealer and player after one round
@@ -134,10 +122,7 @@ public class Judge{
     public static void printBalance(Person[] ps){
         System.out.println("Balance for every players:");
         for(int i=0; i<ps.length; i++){
-        	if(i != Main.dealer_index)
             System.out.println("Player " + ps[i].getID() + " : $" + ps[i].getBalance());
-        	else if(i == Main.dealer_index)
-        		System.out.println("Dealer : $" + ps[i].getBalance());
         }
     }
 
@@ -206,6 +191,26 @@ public class Judge{
         for(int i = 0;i<aceCount(cards)-1;i++){
             valueSum += 10;
         }
+        return valueSum;
+    }
+
+    /**
+     * use it to judge whoWin()
+     * @param cards
+     * @return max sum of value without bust
+     */
+    public static int getMaxCardsValueWithoutBustForTE(Card[] cards){
+        int valueSum = getCardsValue(cards);
+
+        // if exists one or more Ace
+        for(int i = 0;i<aceCount(cards);i++){
+            valueSum += 10;
+        }
+
+        if(valueSum > winNumber){
+            valueSum -= 10;
+        }
+        
         return valueSum;
     }
 }

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:51
- * @LastEditTime: 2019-10-06 21:58:47
+ * @LastEditTime: 2019-10-06 23:46:19
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -52,6 +52,14 @@ public class Player extends Person{
      */
     public int getMaxCardsValue(){
         return Judge.getMaxCardsValueForTE(this.cardsInHand);
+    }
+
+    /**
+     * use it to judge whoWin()
+     * @return max sum of value without bust
+     */
+    public int getMaxCardsValueWithoutBust(){
+        return Judge.getMaxCardsValueWithoutBustForTE(this.cardsInHand);
     }
 
     /**
