@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: Jun Li
  * @Date: 2019-09-22 18:07:51
- * @LastEditTime: 2019-10-05 21:22:15
+ * @LastEditTime: 2019-10-06 21:58:47
  * @LastEditors: Please set LastEditors
  */
 package bj;
@@ -10,9 +10,8 @@ package bj;
 import java.util.Scanner;
 
 public class Player extends Person{
-    Card[] cardsInLeft = {}; //0
-    Card[] cardsInRight = {}; //1
-    private int bet;
+    private Card[] cardsInHand = {}; // array for cards received
+    private int bet; // bet for every round
 
     public Player(int ID, int balance){
         super(ID, balance);
@@ -35,53 +34,40 @@ public class Player extends Person{
 
     //************** Override methods from Person class *****************
     @Override
-    public void addCard(Card card, int leftOrRight){
-        if(leftOrRight == 0){
-            this.cardsInLeft = add(cardsInLeft, card);
-        }
-        else this.cardsInRight = add(cardsInRight, card);
+    public void addCard(Card card){
+        cardsInHand = add(cardsInHand, card);
     }
 
-    //calculate max sum value of cards in hand, treat 'A's as 11 if !isBust()
-    public int getCardsValue(int leftOrRight){
-        int valueSum = 0;
-        if(leftOrRight == 0){
-            for(int i=0; i<cardsInLeft.length; i++){
-                valueSum += cardsInLeft[i].getValue();
-            }
-        }
-        else{
-            for(int i=0; i<cardsInRight.length; i++){
-                valueSum += cardsInRight[i].getValue();
-            }
-        }
-        return valueSum;
+    /**
+     * treat Ace as 1, 
+     * @return least sum of value
+     */
+    public int getCardsValue(){
+        return Judge.getCardsValue(this.cardsInHand);
     }
 
-    //get received cards in one hand, 0 for left hand and 1 for right hand
-    public Card[] getCards(int leftOrRight){
-        if(leftOrRight == 0)
-        return this.cardsInLeft;
-        else return this.cardsInRight;
+    /**
+     * treat one Ace as 1, other Ace as 1 
+     * @return least sum of value
+     */
+    public int getMaxCardsValue(){
+        return Judge.getMaxCardsValueForTE(this.cardsInHand);
     }
 
-    //print what the player has in certain hand
+    /**
+     * @return cards in hand
+     */
+    public Card[] getCards(){
+        return this.cardsInHand;
+    }
+
+    /**
+     * print all cards in hand in console
+     * */ 
     public void printCardsInHand(){
         System.out.print("Cards in hand: ");
-        if(cardsInRight.length == 0){
-            for(int i=0;i<cardsInLeft.length;i++){
-                System.out.print(cardsInLeft[i].getSuit()+ " " +cardsInLeft[i].getRealValue()+ " ");
-            }
-        }
-        else{
-            System.out.print("LEFT: ");
-            for(int i=0;i<cardsInLeft.length;i++){
-                System.out.print(cardsInLeft[i].getSuit()+ " " +cardsInLeft[i].getRealValue()+ " ");
-            }
-            System.out.print("  RIGHT: ");
-            for(int i=0;i<cardsInRight.length;i++){
-                System.out.print(cardsInRight[i].getSuit()+ " " +cardsInRight[i].getRealValue()+ " ");
-            }
+        for(int i=0;i<cardsInHand.length;i++){
+            System.out.print(cardsInHand[i].getSuit()+ " " +cardsInHand[i].getRealValue()+ " ");
         }
         System.out.println();
     }
@@ -90,17 +76,12 @@ public class Player extends Person{
     
 
     //choose action. leftOrRight: 0 for lefthand, 1 for righthand
-    public int chooseAction(Cards cards, int leftOrRight){
-        if(leftOrRight == 0){
-            System.out.println("left hand:");
-        }
-        else System.out.println("right hand:");
-
+    public int chooseAction(Cards cards){
+        System.out.println("****************************************");
+        System.out.println("Player " + this.getID() + ", please choose your action:");
         System.out.println("1 - Hit"); //1
         System.out.println("2 - Stand"); //2
-        System.out.println("3 - Split");//3
-        System.out.println("4 - Double Up");//4
-        System.out.print("Please choose your action(input index number):");
+        System.out.print("Please choose your action(1 or 2):");
 
         int choice;
         while(true){
@@ -114,19 +95,9 @@ public class Player extends Person{
             }
         }
         while(true){
-            if(choice<1 || choice >4){
+            if(choice<1 || choice >2){
                 Scanner in = new Scanner(System.in);
-                System.out.print("Input invalid, input valid index number:");
-                choice = in.nextInt();
-            }
-            else if(choice == 3 && cardsInLeft.length != 2){
-                Scanner in = new Scanner(System.in);
-                System.out.print("Cannot split your cards, input another index:");
-                choice = in.nextInt();
-            }
-            else if(!(this.cardsInLeft[0].getValue() == cardsInLeft[1].getValue() && cardsInLeft.length == 2 && cardsInRight.length == 0) && choice == 3){
-                Scanner in = new Scanner(System.in);
-                System.out.print("Cannot split your cards, input another index:");
+                System.out.print("Input invalid, input valid index number(1 or 2):");
                 choice = in.nextInt();
             }
             else break;
@@ -135,64 +106,70 @@ public class Player extends Person{
         switch(choice){
             case 1: 
             {
-                hit(this, leftOrRight,cards);
+                hit(cards);
                 return 1;
             }
             case 2: return this.stand();
-            case 3: {
-                split(cards);
-                return 3;
-            }
-            case 4: return doubleUp(cards, leftOrRight);
             default: return 0;
         }
     }
     
-    /** four possible actions
-     * @param player :Player instance
-     * @param leftOrRight : lefthand(0) or righthand(1)
-     * @param cards : Cards instance
-     * */
-    //Hit, return the card received (1)
-    public Card hit(Player player, int leftOrRight,Cards cards){
-        //get one card for left hand
-        if(leftOrRight == 0){
-            player.cardsInLeft = Player.add(player.cardsInLeft, cards.pop(1));
+    // two possible actions
 
+    /**
+     * Hit action
+     * @param cards
+     * @return 1
+     */
+    public int hit(Cards cards){
+            this.cardsInHand = Player.add(this.cardsInHand, cards.pop(1));
             // print cards in hand
-            player.printCardsInHand();
-            return player.cardsInLeft[player.cardsInLeft.length-1];
-        }
-        else{
-            player.cardsInRight = Player.add(player.cardsInRight, cards.pop(1));
-            player.printCardsInHand();
-            return player.cardsInRight[player.cardsInRight.length-1];
-        }
+            this.printCardsInHand();
+            return 1;
     }
-    //Stand (2)
+
+    /**
+     * Stand action
+     * @return 2
+     */
     public int stand(){
         return 2;
     }
 
-    //Split (3)
-    public void split(Cards cards){
-        cardsInRight =  add(cardsInRight, cardsInLeft[1]);
-        cardsInLeft =  remove(cardsInLeft , 1);
+    /** Once all Players stand or bust, the dealer reveals their face down card to
+    the Player, and continues to hit until the hand value of the Dealer
+    reaches or exceeds 27.*/
+    public void autoHit(Cards cards){
+        printCardsInHand();
+        // if natural TRIANTAENA
+        if(Judge.isNaturalBJ(cardsInHand) == true){
+            System.out.println("Dealer has NATURAL TRIANTAENA!!!");
+            return;
+        }
+        // if lucky 14
+        if(Judge.isLucky14(cardsInHand) == true){
+            System.out.println("Dealer has LUCKY 14!!!");
+            return;
+        }
 
-        // receive oen card for both hands
-        hit(this, 0,cards);
-        hit(this, 1,cards);
+        boolean aceUsed = false; //if there is one Ace treated as 1
+        //calculate sum value of cards in hand
+        int valueSum = getMaxCardsValue();
+
+        while(valueSum < Judge.winNumber-4){
+            // hit
+            hit(cards);
+
+            // if receive a card that leads to bust, then treat Ace as 1 until valueSum does not exceeds 21 or no more Ace left
+            if(valueSum > Judge.winNumber && Judge.aceCount(cardsInHand) > 0 && aceUsed == false){
+                valueSum -= 10;
+                aceUsed = true;
+            }   
+        }
     }
 
-    //Double up (4)
-    public int doubleUp(Cards cards, int leftOrRight){
-        this.bet += this.bet;
-        hit(this, leftOrRight,cards);
-        return stand();
-    }
 
-    //This method will add an element to an array and return the resulting array
-    //add an item to an array
+    //This method will add an element to an array at end and return the resulting array
     public static Card[] add(Card[] arr, Card element){
         Card[] tempArr = new Card[arr.length+1];
         System.arraycopy(arr, 0, tempArr, 0, arr.length);
@@ -207,11 +184,9 @@ public class Player extends Person{
         return tempArr;
     }
     
-    //clear all the cards in both hands
+    //clear all the cards in hand
     public void clear_cards() {
-    		Card[] new_cardsInLeft = {};
-    		Card[] new_cardsInRight = {};
-    		this.cardsInLeft = new_cardsInLeft;
-    		this.cardsInRight = new_cardsInLeft;
+    		Card[] emptyCardArray = {};
+    		this.cardsInHand = emptyCardArray;
     }
 }
