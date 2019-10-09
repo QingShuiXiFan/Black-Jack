@@ -2,12 +2,15 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-27 17:54:29
- * @LastEditTime: 2019-10-07 00:04:07
+ * @LastEditTime: 2019-10-08 21:53:33
  * @LastEditors: Please set LastEditors
  */
 package bj;
 
+import java.util.EnumSet;
 import java.util.Scanner;
+
+import javax.swing.tree.DefaultTreeCellEditor.EditorContainer;
 
 public class Round {
 	 private int [] is_bust;                     //is_bust: 0 - neither bust, 1 - only left hand bust, 2 - only right hand bust, 3 - both hands bust 
@@ -29,7 +32,7 @@ public class Round {
 		 	System.out.println("============NEW ROUND START=============");
 	    	Cards cards = new Cards();
 	    	if (deal_cards_start(person, cards)){
-	    		System.out.println("all  players quit, this round ends");
+	    		System.out.println("all players quit, this round ends");
 	    		return;
 			}
 	    		for(int i = 0; i < num_of_players; i++) {                            
@@ -56,19 +59,30 @@ public class Round {
 		 Scanner in=new Scanner(System.in);
 	 			int count=0;
 	    		for(int j = 0; j < num_of_players; j++) {
+					System.out.print("Dealer ");
+					person[dealer_index].addCard(cards.pop(1));
 	    			if(j != dealer_index) {
 	    				System.out.print("Player " + j + " ");
-	    				person[j].addCard(cards.pop(1));
+						person[j].addCard(cards.pop(1));
+						System.out.println("Dealer's first card: " + person[dealer_index].getCards()[0].getSuit() + person[dealer_index].getCards()[0].getRealValue());
 	    				System.out.println("Player " + j + " wants quit this round?(y/n)");
 	    				String s=in.nextLine();
-	    				if(s.equals('n')){
+	    				if(s.equals("y")){
 	    					count++;
 	    					is_bust[j]=3;
+						}
+						else{
+							System.out.print("Player " + j + " ");
+							person[j].addCard(cards.pop(1));
+							System.out.print("Player " + j + " ");
+							person[j].addCard(cards.pop(1));
 						}
 	    			}
 	    			else {
 						System.out.print("Dealer ");
-						person[j].addCard(cards.pop(1));
+						person[j].addCard(cards.pop(0));
+						System.out.print("Dealer ");
+						person[j].addCard(cards.pop(0));
 	    			}
 	    		}
 	    		return count==num_of_players-1;
