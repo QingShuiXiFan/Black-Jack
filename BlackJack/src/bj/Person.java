@@ -37,10 +37,10 @@ public class Person{
         Card[] cards = {};
         return cards;
     }
-    public Card[] getCards(int leftOrRight){
-        Card[] cards = {};
-        return cards;
-    }
+//    public Card[] getCards(int leftOrRight){
+//        Card[] cards = {};
+//        return cards;
+//    }
     public void printCardsInHand(){}
     public void printCardsInHand(int leftOrRight){}
 }

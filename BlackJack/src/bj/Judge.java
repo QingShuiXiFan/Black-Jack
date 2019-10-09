@@ -17,7 +17,7 @@ public class Judge{
      */
     public static boolean isBust(Card[] cards){
         int sum = getLeastCardsValueForTE(cards);
-
+        //System.out.println(sum);
         if(sum > winNumber)return true;
         else return false;
     }

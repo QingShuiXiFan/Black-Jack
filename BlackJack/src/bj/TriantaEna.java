@@ -20,8 +20,6 @@ public class TriantaEna{
         	for(int i = 0; i < num_of_players; i++) {
         		if(i != dealer_index)
         			person[i] = new Player(i, balance);
-        		else
-        			continue;
             }
             
         while(true) {                                                      //round
@@ -30,8 +28,7 @@ public class TriantaEna{
 			round.newRound(person);
 			Judge.printBalance(person);
         	if(is_cash_out() == false && judge_balance(person) == -1) {
-        		round = new Round(num_of_players, dealer_index);
-			    round.newRound(person);
+        	    round.clear_game(person);
         		decideBanker(person);
         		continue;
         	}

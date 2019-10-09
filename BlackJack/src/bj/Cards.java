@@ -44,20 +44,29 @@ public class Cards{
                     else if(count==13)
                         c= new Card("K","K",10);
                 }
+                if(j%4==0){
+                    c.setSuit("♦");
+                }else if(j%4==1){
+                    c.setSuit("♠");
+                }else if(j%4==2){
+                    c.setSuit("♤");
+                }else{
+                    c.setSuit("♧");
+                }
                 cards.add(c);
             }
         }
-        for(int i=0;i<52;i++){
-            if(i%4==0){
-                cards.get(i).setSuit("♦");
-            }else if(i%4==1){
-                cards.get(i).setSuit("♠");
-            }else if(i%4==2){
-                cards.get(i).setSuit("♤");
-            }else{
-                cards.get(i).setSuit("♧");
-            }
-        }
+//        for(int i=0;i<52;i++){
+//            if(i%4==0){
+//                cards.get(i).setSuit("♦");
+//            }else if(i%4==1){
+//                cards.get(i).setSuit("♠");
+//            }else if(i%4==2){
+//                cards.get(i).setSuit("♤");
+//            }else{
+//                cards.get(i).setSuit("♧");
+//            }
+//        }
     }
 
     /** methods */

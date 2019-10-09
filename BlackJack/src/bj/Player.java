@@ -166,8 +166,9 @@ public class Player extends Person{
 
         while(valueSum < Judge.winNumber-4){
             // hit
+            //System.out.println(valueSum);
             hit(cards);
-
+            valueSum+=cardsInHand[cardsInHand.length-1].getValue();
             // if receive a card that leads to bust, then treat Ace as 1 until valueSum does not exceeds 21 or no more Ace left
             if(valueSum > Judge.winNumber && Judge.aceCount(cardsInHand) > 0 && aceUsed == false){
                 valueSum -= 10;
@@ -197,4 +198,5 @@ public class Player extends Person{
     		Card[] emptyCardArray = {};
     		this.cardsInHand = emptyCardArray;
     }
+
 }
